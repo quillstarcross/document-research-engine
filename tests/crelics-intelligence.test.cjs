@@ -13,6 +13,21 @@ const context = { results: [], history: [], activeQuery: '', norm: s => String(s
 vm.createContext(context);
 vm.runInContext(intelligenceSource, context);
 
+test('safeURL rejects executable and non-web URL schemes', () => {
+  const htmlSource = fs.readFileSync('index.html', 'utf8');
+  const safeStart = htmlSource.indexOf('function safeURL(');
+  const safeEnd = htmlSource.indexOf('async function jsonFetch(', safeStart);
+  assert.notEqual(safeStart, -1, 'safeURL helper exists');
+  assert.notEqual(safeEnd, -1, 'safeURL helper has a clear end');
+  const safeContext = { URL };
+  vm.createContext(safeContext);
+  vm.runInContext(htmlSource.slice(safeStart, safeEnd), safeContext);
+  assert.equal(safeContext.safeURL('javascript:alert(1)'), null);
+  assert.equal(safeContext.safeURL('data:text/html,hello'), null);
+  assert.equal(safeContext.safeURL('https://example.org/image.jpg'), 'https://example.org/image.jpg');
+  assert.equal(safeContext.safeURL('http://example.org/image.jpg'), 'http://example.org/image.jpg');
+});
+
 test('classifies comparison intent', () => {
   assert.equal(context.understandQuery('Compare solar and wind power').intent, 'compare');
 });
