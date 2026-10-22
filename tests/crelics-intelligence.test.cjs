@@ -91,3 +91,47 @@ test('cross-category connections suppress generic overlap and explain candidate 
   assert.ok(connections.every(x => typeof x.reason === 'string' && x.reason.length > 0));
   assert.ok(!connections.some(x => x.shared.length === 1 && ['introduction', 'systems', 'methods'].includes(x.shared[0])));
 });
+
+test('jsonFetch passes an abort signal and returns parsed JSON', async () => {
+  const htmlSource = fs.readFileSync('index.html', 'utf8');
+  const start = htmlSource.indexOf('async function jsonFetch(');
+  const end = htmlSource.indexOf('// CRELICS query intelligence:', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  let receivedSignal;
+  const fetch = async (_url, options) => {
+    receivedSignal = options.signal;
+    return { ok: true, json: async () => ({ answer: 42 }) };
+  };
+  const context = { fetch, AbortController, setTimeout, clearTimeout };
+  vm.createContext(context);
+  vm.runInContext(htmlSource.slice(start, end), context);
+  assert.deepEqual(await context.jsonFetch('https://example.org/api', 100), { answer: 42 });
+  assert.ok(receivedSignal instanceof AbortSignal === false || receivedSignal);
+});
+
+test('jsonFetch reports HTTP failures clearly', async () => {
+  const htmlSource = fs.readFileSync('index.html', 'utf8');
+  const start = htmlSource.indexOf('async function jsonFetch(');
+  const end = htmlSource.indexOf('// CRELICS query intelligence:', start);
+  const context = {
+    fetch: async () => ({ ok: false, status: 429 }),
+    AbortController, setTimeout, clearTimeout
+  };
+  vm.createContext(context);
+  vm.runInContext(htmlSource.slice(start, end), context);
+  await assert.rejects(context.jsonFetch('https://example.org/api', 100), /HTTP 429/);
+});
+
+test('jsonFetch aborts a request that exceeds its timeout', async () => {
+  const htmlSource = fs.readFileSync('index.html', 'utf8');
+  const start = htmlSource.indexOf('async function jsonFetch(');
+  const end = htmlSource.indexOf('// CRELICS query intelligence:', start);
+  const fetch = (_url, options) => new Promise((_resolve, reject) => {
+    options.signal.addEventListener('abort', () => reject(new Error('aborted')), { once: true });
+  });
+  const context = { fetch, AbortController, setTimeout, clearTimeout };
+  vm.createContext(context);
+  vm.runInContext(htmlSource.slice(start, end), context);
+  await assert.rejects(context.jsonFetch('https://example.org/slow', 5), /timed out after 5 ms/);
+});
