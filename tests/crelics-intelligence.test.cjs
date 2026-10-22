@@ -120,7 +120,7 @@ test('jsonFetch passes an abort signal and returns parsed JSON', async () => {
 test('jsonFetch reports HTTP failures clearly', async () => {
   const htmlSource = fs.readFileSync('index.html', 'utf8');
   const start = htmlSource.indexOf('async function jsonFetch(');
-  const end = htmlSource.indexOf('// CRELICS query intelligence:', start);
+  const end = htmlSource.indexOf('\nasync \n// CRELICS query intelligence:', start);
   const context = {
     fetch: async () => ({ ok: false, status: 429 }),
     AbortController, setTimeout, clearTimeout
@@ -133,7 +133,7 @@ test('jsonFetch reports HTTP failures clearly', async () => {
 test('jsonFetch aborts a request that exceeds its timeout', async () => {
   const htmlSource = fs.readFileSync('index.html', 'utf8');
   const start = htmlSource.indexOf('async function jsonFetch(');
-  const end = htmlSource.indexOf('// CRELICS query intelligence:', start);
+  const end = htmlSource.indexOf('\nasync \n// CRELICS query intelligence:', start);
   const fetch = (_url, options) => new Promise((_resolve, reject) => {
     options.signal.addEventListener('abort', () => reject(new Error('aborted')), { once: true });
   });
