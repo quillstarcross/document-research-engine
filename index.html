@@ -3,223 +3,226 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101827">
-<title>Document Research Engine</title>
+<meta name="theme-color" content="#101713">
+<meta name="description" content="CRELICS is an adaptive search and discovery workspace that learns your preferences locally and helps you explore reliable sources.">
+<title>CRELICS — Follow the signal</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#edf3ff;font:16px/1.5 system-ui;padding:18px}main{max-width:850px;margin:auto}.card{background:#131c30;border:1px solid #273550;border-radius:16px;padding:16px;margin:14px 0}h1{font-size:clamp(27px,6vw,40px);margin:0}p,.muted{color:#9cabc5}input,select,button{font:inherit;padding:11px;border-radius:10px;border:1px solid #354661;background:#0b1324;color:#edf3ff;max-width:100%}input{width:100%}button{background:#8be9c4;color:#09231b;font-weight:750;cursor:pointer}.row{display:flex;gap:8px;margin:12px 0;align-items:center}.row>*{min-width:0}.result{padding:13px 0;border-bottom:1px solid #273550}.result a{color:#9bbcff}.tag{font-size:12px;background:#263653;padding:4px 8px;border-radius:8px}.notice{border-left:3px solid #e6c879;padding:10px;color:#e6d8b0;background:#211f1b;font-size:13px}a{overflow-wrap:anywhere}@media(max-width:520px){.row{flex-direction:column;align-items:stretch}button,select{width:100%}}
+:root{color-scheme:light;--bg:#0b100f;--panel:#111a17;--ink:#eef6f1;--muted:#9aada3;--line:#263a32;--accent:#8de6b7;--accent-soft:#17382a;--warm:#25342b;--shadow:0 18px 55px #0005;--radius:22px}
+[data-theme="light"]{color-scheme:light;--bg:#f4f6f0;--panel:#fffefa;--ink:#18251f;--muted:#68766e;--line:#dfe6de;--accent:#226b56;--accent-soft:#e0f2e7;--warm:#f1e8d9;--shadow:0 10px 34px #24362a0b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transition:background .2s,color .2s}button,input,select{font:inherit}button{cursor:pointer}a{color:var(--accent);overflow-wrap:anywhere}.shell{max-width:1320px;margin:auto;padding:0 30px;position:relative}.shell:before{content:"";position:fixed;inset:-25vh -20vw auto auto;width:60vw;height:60vw;max-width:850px;pointer-events:none;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 9%,transparent),transparent 68%);z-index:-1;animation:ambientDrift 24s ease-in-out infinite alternate}@keyframes ambientDrift{from{transform:translate3d(-3vw,-2vh,0) scale(.92)}to{transform:translate3d(2vw,4vh,0) scale(1.08)}}.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:18px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);font-weight:850;letter-spacing:.13em;font-size:17px}.brand-mark{width:35px;height:35px;border-radius:12px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:19px;letter-spacing:0}.brand small{display:block;font-size:9px;color:var(--muted);letter-spacing:.16em;font-weight:700}.top-actions{display:flex;gap:9px;align-items:center}.quiet,.pill,.navbtn,.iconbtn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:9px 14px}.quiet:hover,.navbtn:hover,.iconbtn:hover{border-color:var(--accent)}.profile-chip{font-size:12px;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:7px 11px;font-weight:750}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:42px;padding:30px 0 60px}.sidebar{position:sticky;top:20px;align-self:start}.side-label{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.17em;text-transform:uppercase;margin:16px 0 10px}.navlist{display:grid;gap:5px}.navbtn{border:0;text-align:left;border-radius:12px;background:transparent;color:var(--muted);padding:11px 13px;display:flex;gap:11px;align-items:center}.navbtn.active{background:var(--accent-soft);color:var(--accent);font-weight:800}.navbtn span:first-child{width:20px;text-align:center}.privacy-note{margin-top:26px;padding:15px;border:1px solid var(--line);border-radius:16px;color:var(--muted);font-size:12px}.privacy-note strong{display:block;color:var(--ink);margin-bottom:4px}.main{min-width:0}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.16em;font-weight:850;color:var(--accent);margin:8px 0 13px}.hero h1{font-size:clamp(42px,6vw,76px);line-height:.99;letter-spacing:-.065em;max-width:850px;margin:0;font-weight:780;text-wrap:balance}.hero h1 em{background:linear-gradient(95deg,var(--accent),#8bb8ed 65%,#d2a8ff);background-clip:text;-webkit-background-clip:text;color:transparent}.hero h1 em{font-family:Georgia,serif;font-weight:400;color:var(--accent)}.intro{color:var(--muted);max-width:620px;margin:17px 0 24px;font-size:16px}.searchbox{background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(18px);border:1px solid color-mix(in srgb,var(--accent) 28%,var(--line));box-shadow:0 12px 48px #0002,0 0 0 1px #ffffff04 inset;padding:8px;border-radius:20px;display:flex;align-items:center;gap:9px;max-width:900px;transition:box-shadow .25s,border-color .25s,transform .25s}.searchbox:focus-within{box-shadow:0 16px 54px #0003,0 0 0 4px var(--accent-soft);transform:translateY(-2px)}.searchbox:focus-within{outline:3px solid var(--accent-soft);border-color:var(--accent)}.searchbox input{border:0;outline:0;background:transparent;color:var(--ink);padding:12px 9px;min-width:0;flex:1}.searchbox button,.primary{border:0;background:var(--accent);color:white;padding:12px 20px;border-radius:12px;font-weight:800}.searchbox button:disabled{opacity:.6;cursor:wait}.hint{font-size:12px;color:var(--muted);margin:10px 2px 0}.topic-row{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 28px}.topic{border:1px solid var(--line);background:transparent;color:var(--muted);padding:7px 12px;border-radius:999px;font-size:12px}.topic:hover{background:var(--accent-soft);color:var(--accent);border-color:transparent}.category-tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:white}.metadata-details{margin:10px 0;color:var(--muted);font-size:.88rem}.metadata-details summary{cursor:pointer;color:var(--text);font-weight:600}.metadata-details p{margin:8px 0}.result-thumb{max-width:180px;max-height:140px;object-fit:contain;border-radius:10px;margin:8px 0;background:var(--bg)}.section-head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin:32px 0 15px}.section-head h2{font-size:21px;letter-spacing:-.035em;margin:0}.section-head p{margin:3px 0 0;color:var(--muted);font-size:13px}.textbtn{background:none;border:0;color:var(--accent);font-weight:750;padding:7px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.discovery-card,.result-card,.panel{border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 95%,transparent);border-radius:var(--radius);padding:19px;box-shadow:var(--shadow);min-width:0;transition:transform .22s,border-color .22s,box-shadow .22s}.discovery-card:hover,.result-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));box-shadow:0 18px 48px #0002}.discovery-card{min-height:168px;display:flex;flex-direction:column;justify-content:space-between}.card-top{display:flex;justify-content:space-between;gap:12px;align-items:start}.microtag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:850;color:var(--accent)}.discovery-card h3{font-size:18px;line-height:1.25;letter-spacing:-.025em;margin:13px 0 7px}.discovery-card p{font-size:13px;color:var(--muted);margin:0}.card-link{font-size:12px;font-weight:800;text-decoration:none;margin-top:16px;display:inline-flex;gap:7px}.subtle{color:var(--muted)}.hidden{display:none!important}.result-tools{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.result-tools select{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:9px 11px;border-radius:10px;max-width:100%}.connection-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--bg)}.connection-card p{margin:8px 0;overflow-wrap:anywhere}.connection-card small{color:var(--muted)}.intelligence-panel{margin:18px 0 22px;padding:22px;border-color:color-mix(in srgb,var(--accent) 30%,var(--line));background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 7%,var(--panel)),var(--panel) 65%)}.intelligence-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}.intelligence-head h2{font-size:22px;margin:4px 0}.intelligence-head p{margin:0;color:var(--muted);max-width:760px}.intelligence-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px;margin-top:22px}.path-list{display:grid;gap:8px;margin-top:10px}.path-button{display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink)}.path-button:hover,.path-button:focus-visible{border-color:var(--accent);transform:translateY(-1px)}.path-button strong,.path-button small{display:block}.path-button small{color:var(--muted);font-size:12px;margin-top:3px;overflow-wrap:anywhere}.path-number{font-size:12px;color:var(--accent);font-weight:800}.evidence-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0}.evidence-stats div{padding:11px;border:1px solid var(--line);border-radius:12px}.evidence-stats strong,.evidence-stats span{display:block}.evidence-stats strong{font-size:23px}.evidence-stats span{font-size:11px;color:var(--muted)}.portal-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.portal-row .topic{font-size:12px}.portal-row .topic span{opacity:.7;margin-left:4px}@media(max-width:760px){.intelligence-grid{grid-template-columns:1fr}.intelligence-head{display:block}.intelligence-head>.source-badge{display:inline-block;margin-top:10px}.intelligence-panel{padding:16px}}.result-list{display:grid;gap:11px}.result-card{padding:18px 20px}.result-card h3{font-size:18px;line-height:1.3;margin:9px 0 5px;letter-spacing:-.02em}.result-card h3 a{color:var(--ink);text-decoration:none}.result-card h3 a:hover{color:var(--accent)}.result-card p{margin:8px 0;color:var(--muted);font-size:13px}.result-meta{font-size:11px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}.source-badge{font-weight:800;color:var(--accent)}.result-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.mini-btn{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:9px;padding:6px 10px;font-size:11px}.mini-btn.saved{color:var(--accent);background:var(--accent-soft);border-color:transparent}.empty{padding:36px 20px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px}.empty strong{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}.status{padding:12px 14px;background:var(--accent-soft);color:var(--accent);border-radius:12px;font-size:13px;margin:14px 0}.status.error{background:#f9e8e5;color:#913b2c}.workspace-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel h3{margin:0 0 6px}.panel p{color:var(--muted);font-size:13px}.field{display:grid;gap:6px;margin:15px 0}.field label{font-weight:750;font-size:13px}.field select,.field input{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:11px;width:100%}.choice-row{display:flex;gap:8px;flex-wrap:wrap}.choice{border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:transparent;color:var(--muted);font-size:12px}.choice[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}.footer{border-top:1px solid var(--line);padding:20px 0 28px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.mobile-nav{display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:800px){.shell{padding:0 18px}.layout{grid-template-columns:1fr;gap:22px;padding-top:22px}.sidebar{position:static;display:none}.mobile-nav{display:flex;gap:6px;overflow:auto;padding:13px 0 2px}.mobile-nav .navbtn{white-space:nowrap;flex:0 0 auto}.layout{padding-top:18px}.workspace-grid{grid-template-columns:1fr}.topbar{height:66px}.privacy-note{display:none}.profile-chip{display:none}}
+@media(max-width:540px){.shell{padding:0 14px}.topbar{gap:8px}.brand{font-size:15px}.brand-mark{width:31px;height:31px}.top-actions .quiet{padding:8px 10px;font-size:12px}.hero h1{font-size:39px}.intro{font-size:14px}.searchbox{gap:3px}.searchbox button{padding:11px 13px}.grid{grid-template-columns:1fr}.discovery-card{min-height:145px}.section-head{align-items:start}.section-head h2{font-size:19px}.result-card{padding:15px}.footer{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style>
 </head>
-<body><main>
-<p style="color:#8be9c4;font-weight:800;letter-spacing:.15em">RESEARCH WORKSPACE</p>
-<h1>Document Research Engine</h1>
-<p>Search public book catalogs and document listings, collect metadata, rank known counts, and export your research.</p>
-<section class="card"><b>01 / Search any topic</b><div class="row"><input id="q" value="Python programming" placeholder="Python, AI, robotics…"><button id="searchBtn">Search</button></div><div id="links" class="row" style="flex-wrap:wrap"></div><div id="status" class="muted">Search Open Library, Google Books and Internet Archive.</div></section>
-<section class="card"><b>02 / Results and ranking</b><div class="row"><select id="sort"><option value="views">Known views: high to low</option><option value="downloads">Internet Archive downloads</option><option value="title">Title A–Z</option></select><select id="filter"><option value="all">All sources</option></select></div><p id="counts" class="muted"></p><div id="results">Search to see results.</div></section>
-<section class="card"><b>03 / Import or export CSV</b><p class="muted">CSV columns: title,url,source,author,views,downloads,description</p><div class="row"><input type="file" id="file" accept=".csv"><button id="exportBtn">Export CSV</button></div><button id="templateBtn">Download CSV template</button><p id="msg" class="muted"></p></section>
-<section class="card"><b>Sources &amp; limitations</b><p>Public catalogs: <a href="https://openlibrary.org" target="_blank" rel="noopener">Open Library</a>, <a href="https://books.google.com" target="_blank" rel="noopener">Google Books</a>, <a href="https://archive.org" target="_blank" rel="noopener">Internet Archive</a>. Search links also include <a href="https://www.scribd.com" target="_blank" rel="noopener">Scribd</a> and Google Scholar.</p><div class="notice">View counts are shown only when a source provides them or you import them. Internet Archive downloads are a separate metric, never views. This website does not scrape Scribd or bypass its restrictions. Results depend on public APIs and browser connectivity.</div></section>
+<body>
+<div class="shell">
+<header class="topbar">
+<a class="brand" href="#" aria-label="CRELICS home" id="homeLink"><span class="brand-mark">c.</span><span>CRELICS<small>SEARCH · UNDERSTAND · DISCOVER</small></span></a>
+<div class="top-actions"><span class="profile-chip" id="profileChip">Fresh perspective</span><button class="quiet" id="themeBtn" type="button" aria-label="Toggle color theme">◐ Theme</button><button class="quiet" id="settingsTop" type="button">Personalize</button></div>
+</header>
+<nav class="mobile-nav" id="mobileNav" aria-label="Main navigation"></nav>
+<div class="layout">
+<aside class="sidebar">
+<div class="side-label">Your space</div><nav class="navlist" id="sideNav" aria-label="Main navigation"></nav>
+<div class="privacy-note"><strong>✳ Your experience, your choice</strong>CRELICS uses your saved preferences and on-device activity to adapt this browser experience. You can inspect or clear it at any time.</div>
+</aside>
+<main class="main" id="main" tabindex="-1">
+<section id="homeView">
+<div class="hero">
+<div class="eyebrow" id="greetingEyebrow">A SEARCH ENGINE THAT ADAPTS</div>
+<h1 id="heroTitle">Follow the question.<br><em>Find the connection.</em></h1>
+<p class="intro" id="heroIntro">One question can open a thousand doors. Search the web, images, video, news, research, products, places, discussions, books, and archives, then follow the connections that matter to you.</p>
+<form class="searchbox" id="searchForm" role="search"><label class="sr-only" for="query">Search a topic or question</label><span aria-hidden="true" style="padding-left:9px;color:var(--muted)">⌕</span><input id="query" name="q" list="querySuggestions" autocomplete="off" placeholder="What are you curious about today?" maxlength="300"><button id="searchBtn" type="submit">Search ↗</button></form><datalist id="querySuggestions"></datalist>
+<div class="hint" id="searchHint">One question, many angles. Search across web pages, images, videos, news, research, products, places, discussions, books, and archives.</div>
+<div class="topic-row" id="topicRow" aria-label="Suggested searches"></div>
+</div>
+<div id="homeDynamic"></div>
+</section>
+<section id="searchView" class="hidden"><div class="eyebrow">SEARCH / SOURCE DISCOVERY</div><h1 style="font-size:clamp(30px,4vw,45px)">Results, with context.</h1><p class="intro" id="resultIntro">A source-first view shaped around your current question.</p><div id="intelligencePanel" class="panel intelligence-panel" aria-live="polite"></div><div class="topic-row" id="categoryTabs" role="tablist" aria-label="Search result type"><button class="topic category-tab" type="button" role="tab" aria-selected="true" data-category="all">All</button><button class="topic category-tab" type="button" role="tab" aria-selected="false" data-category="web">Web</button><button class="topic category-tab" type="button" role="tab" aria-selected="false" data-category="images">Images</button><button class="topic category-tab" type="button" role="tab" aria-selected="false" data-category="videos">Videos</button><button class="topic category-tab" type="button" role="tab" aria-selected="false" data-category="news">News</button><button class="topic category-tab" type="button" role="tab" aria-selected="false" data-category="research">Research</button><button class="topic category-tab" type="button" role="tab" aria-selected="false" data-category="books">Books</button><button class="topic category-tab" type="button" role="tab" aria-selected="false" data-category="products">Products</button><button class="topic category-tab" type="button" role="tab" aria-selected="false" data-category="places">Places</button><button class="topic category-tab" type="button" role="tab" aria-selected="false" data-category="discussions">Discussions</button></div><form class="searchbox" id="searchForm2" role="search"><label class="sr-only" for="query2">Search again</label><span aria-hidden="true" style="padding-left:9px;color:var(--muted)">⌕</span><input id="query2" list="querySuggestions" maxlength="300" placeholder="Refine your search"><button type="submit">Search ↗</button></form><div id="searchStatus" role="status" aria-live="polite"></div><div class="result-tools"><select id="sourceFilter" aria-label="Filter by source"><option value="all">All sources</option></select><select id="sortBy" aria-label="Sort results"><option value="relevance">Relevance</option><option value="title">Title A–Z</option><option value="newest">Newest publication</option></select><button class="quiet" id="clearSearch" type="button">Clear results</button></div><div class="result-list" id="resultList"></div><p class="subtle" id="resultFootnote" style="font-size:11px;margin-top:14px"></p></section>
+<section id="exploreView" class="hidden"><div class="eyebrow">EXPLORE / BEYOND THE QUERY</div><h1 style="font-size:clamp(30px,4vw,45px)">Make room for the unexpected.</h1><p class="intro">A discovery space shaped by your interests. These are starting points, not predictions about what you must like.</p><div class="grid" id="exploreGrid"></div><div class="section-head"><div><h2>Your interest map</h2><p>Topics you've chosen or explored in this browser.</p></div><button class="textbtn" id="editInterests">Edit interests ↗</button></div><div class="panel" id="interestMap"></div></section>
+<section id="savedView" class="hidden"><div class="eyebrow">YOUR SPACE / SAVED SOURCES</div><h1 style="font-size:clamp(30px,4vw,45px)">Keep the useful things.</h1><p class="intro">Saved sources stay in this browser on this device. Nothing is synchronized to a server in this version.</p><div id="savedList" class="result-list"></div></section>
+<section id="settingsView" class="hidden"><div class="eyebrow">CONTROL / PERSONALIZATION</div><h1 style="font-size:clamp(30px,4vw,45px)">Tune your experience.</h1><p class="intro">Tell CRELICS what helps. Your preferences shape the interface and how results are presented.</p><div id="settingsContent"></div></section>
 </main>
+</div>
+<footer class="footer"><span>CRELICS · A more thoughtful way to search.</span><span>Prototype · Source availability varies · Personalization is optional</span></footer>
+</div>
 <script>
 'use strict';
-const data = [];
-const seen = new Set();
-const $ = id => document.getElementById(id);
-function numberOrNull(value) {
-  if (value === null || value === undefined || String(value).trim() === '') return null;
-  const n = Number(String(value).replace(/[ ,]/g, ''));
-  return Number.isFinite(n) && n >= 0 ? n : null;
+const KEY='crelics.preferences.v1', HISTORY='crelics.history.v1', SAVED='crelics.saved.v1', TRAILS='crelics.trails.v1', THEME='crelics.theme.v1';
+
+const $=id=>document.getElementById(id);
+const defaultPrefs={goal:'explore',depth:'balanced',layout:'adaptive',interests:[],showSuggestions:true,personalization:true,profileName:'',onboardingSeen:false};
+let prefs=load(KEY,defaultPrefs), history=load(HISTORY,[]), saved=load(SAVED,[]), trails=load(TRAILS,[]), results=[], activeQuery='', activeView='home', busy=false;
+let activeCategory='all';
+function classify(source,category){if(category)return category;const s=String(source||'').toLowerCase();if(s.includes('youtube')||s.includes('video')||s.includes('archive video'))return 'videos';if(s.includes('news')||s.includes('gdelt'))return 'news';if(s.includes('crossref')||s.includes('research')||s.includes('scholar'))return 'research';if(s.includes('book')||s.includes('library'))return 'books';if(s.includes('image')||s.includes('commons'))return 'images';return 'web'}
+function setCategory(category){activeCategory=category;document.querySelectorAll('[data-category]').forEach(tab=>tab.setAttribute('aria-selected',String(tab.dataset.category===category)));if(typeof renderResults==='function')renderResults()}
+
+const topics=['Artificial intelligence','Physics','Robotics','Climate science','Psychology','Computer science','History','Design'];
+const navItems=[['home','⌂','Home'],['search','⌕','Search'],['explore','✳','Explore'],['saved','♡','Saved'],['settings','⚙','Personalize']];
+function load(k,fallback){try{const x=JSON.parse(localStorage.getItem(k));return x===null?structuredCloneSafe(fallback):x}catch{return structuredCloneSafe(fallback)}}
+function structuredCloneSafe(x){return JSON.parse(JSON.stringify(x))}
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch{return false}}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function norm(s){return String(s||'').trim().toLowerCase()}
+function profileLabel(){if(!prefs.personalization)return 'Personalization off';if(prefs.profileName.trim())return 'For '+prefs.profileName.trim().slice(0,18);if(prefs.interests.length)return 'Your interests, evolving';if(history.length)return 'Learning your preferences';return 'Fresh perspective'}
+function adaptCopy(){const g=prefs.goal;if(!prefs.personalization)return {eyebrow:'A SEARCH ENGINE THAT ADAPTS',title:'Follow the question.<br><em>Find the connection.</em>',intro:'Search the open web, images, videos, news, research, books, and public archives. Explore at your own pace, with control over what CRELICS remembers.'};if(g==='research')return {eyebrow:'YOUR RESEARCH SPACE',title:'Go beyond the headline.<br><em>Follow the evidence.</em>',intro:'Move between web sources, research papers, books, news, and public archives. Compare evidence, save useful findings, and keep original sources close.'};if(g==='learn')return {eyebrow:'LEARN SOMETHING REAL',title:'Start with a question.<br><em>Build understanding.</em>',intro:'Start broad, find trustworthy starting points, then move from explainers to original research, books, video, and adjacent ideas.'};if(g==='solve')return {eyebrow:'FROM QUESTION TO ACTION',title:'Find the useful answer.<br><em>Then go deeper.</em>',intro:'Find practical resources, products, places, discussions, and technical knowledge. Start with what helps now, then verify the source.'};return {eyebrow:'A SEARCH ENGINE THAT ADAPTS',title:'Follow the question.<br><em>Find the connection.</em>',intro:'Search across the web and specialist sources. CRELICS adapts the path, pace, and presentation to your chosen goal, while keeping evidence and source links in view.'}}
+function renderNav(){const html=navItems.map(([id,icon,label])=>'<button class="navbtn '+(activeView===id?'active':'')+'" data-view="'+id+'" type="button" '+(activeView===id?'aria-current="page"':'')+'><span>'+icon+'</span>'+label+(id==='saved'&&saved.length?' <small>('+saved.length+')</small>':'')+'</button>').join('');$('sideNav').innerHTML=html;$('mobileNav').innerHTML=html}
+function go(view){activeView=view;['home','search','explore','saved','settings'].forEach(v=>$(v+'View').classList.toggle('hidden',v!==view));renderNav();if(view==='explore')renderExplore();if(view==='saved')renderSaved();if(view==='settings')renderSettings();window.scrollTo({top:0,behavior:'smooth'})}
+function applyTheme(){const theme=localStorage.getItem(THEME)||'dark';document.documentElement.dataset.theme=theme;$('themeBtn').textContent=theme==='dark'?'☼ Light':'◐ Dark'}
+function setTheme(){const next=(localStorage.getItem(THEME)||'dark')==='dark'?'light':'dark';localStorage.setItem(THEME,next);applyTheme()}
+function renderHome(){const c=adaptCopy();$('greetingEyebrow').textContent=c.eyebrow;$('heroTitle').innerHTML=c.title;$('heroIntro').textContent=c.intro;$('profileChip').textContent=profileLabel();$('topicRow').innerHTML=(prefs.interests.length?prefs.interests:topics.slice(0,6)).map(t=>'<button type="button" class="topic" data-topic="'+esc(t)+'">'+esc(t)+' +</button>').join('');const home=$('homeDynamic');let cards=[];if(prefs.personalization&&prefs.showSuggestions&&history.length){cards.push({tag:'PICK UP WHERE YOU LEFT OFF',title:'Continue exploring',desc:'Return to a question you searched recently.',cta:'Open recent search',action:'recent',topic:history[0].q})}if(prefs.personalization&&prefs.interests.length){cards.push({tag:'YOUR INTERESTS',title:'Explore '+prefs.interests[0],desc:'Search books, research, and archive records around a topic you chose.',cta:'Explore this subject',action:'topic',topic:prefs.interests[0]})}const base=[{tag:'START WITH A QUESTION',title:'Understand a difficult idea',desc:'Search a topic, then compare source material and follow what you want to understand.',cta:'Try artificial intelligence',action:'topic',topic:'artificial intelligence'},{tag:'GO OFF THE BEATEN PATH',title:'Connect two disciplines',desc:'Try a question that crosses boundaries. Unexpected connections are invitations to investigate.',cta:'Try neuroscience and AI',action:'topic',topic:'neuroscience artificial intelligence'},{tag:'LOOK CLOSER',title:'Find scholarly work',desc:'Search research records and inspect the original source rather than relying on a summary.',cta:'Explore machine learning research',action:'topic',topic:'machine learning'},{tag:'YOUR SPACE',title:'Save what matters',desc:'Keep useful results in this browser so you can return to them later.',cta:'View saved sources',action:'saved'}];if(!prefs.personalization||!prefs.showSuggestions)cards=base;else cards=cards.concat(base.filter(c=>!cards.some(x=>x.title===c.title)).slice(0,2));if(prefs.layout==='compact')cards=cards.slice(0,2);home.innerHTML='<div class="section-head"><div><h2>'+((prefs.goal==='research')?'Your research starts here':prefs.goal==='learn'?'A path into something new':prefs.goal==='solve'?'Useful places to begin':'A few places to begin')+'</h2><p>'+(prefs.personalization?'Shaped by your choices. You can change these at any time.':'A neutral starting point, without personalization.')+'</p></div><button class="textbtn" data-view="explore">Explore all ↗</button></div><div class="grid">'+cards.map(c=>'<article class="discovery-card"><div><div class="card-top"><span class="microtag">'+esc(c.tag)+'</span><span aria-hidden="true">↗</span></div><h3>'+esc(c.title)+'</h3><p>'+esc(c.desc)+'</p></div><button class="card-link" data-action="'+c.action+'" '+(c.topic?'data-topic="'+esc(c.topic)+'"':'')+'>'+esc(c.cta)+' →</button></article>').join('')+'</div>';if(!prefs.onboardingSeen){home.insertAdjacentHTML('afterbegin','<div class="status">Make CRELICS yours: choose a goal and interests in <button class="textbtn" data-view="settings">Personalize</button>. You can skip this and search immediately.</div>')}}
+function saveHistory(q){history=[{q,at:Date.now()},...history.filter(x=>norm(x.q)!==norm(q))].slice(0,12);store(HISTORY,history)}
+function sourceName(s){return s==='Crossref'?'Crossref':s}
+function dateText(d){if(!d)return '';return String(d).slice(0,10)}
+function safeURL(raw){try{const u=new URL(raw);return ['https:','http:'].includes(u.protocol)?u.href:null}catch{return null}}
+async function jsonFetch(url,timeoutMs=12000){
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
+ try{
+  const r=await fetch(url,{headers:{'Accept':'application/json'},signal:controller.signal});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return await r.json();
+ }catch(error){
+  if(controller.signal.aborted)throw new Error('Request timed out after '+timeoutMs+' ms');
+  throw error;
+ }finally{clearTimeout(timer)}
 }
-function add(item) {
-  try { item.url = new URL(item.url).href; } catch { return; }
-  const key = item.url.toLowerCase();
-  if (seen.has(key)) return;
-  seen.add(key);
-  item.views = numberOrNull(item.views);
-  item.downloads = numberOrNull(item.downloads);
-  data.push(item);
+async 
+// CRELICS query intelligence: deterministic, explainable pathways rather than fabricated answers.
+function understandQuery(raw){
+ const q=String(raw||'').trim(),n=norm(q);
+ const has=(re)=>re.test(n);
+ let intent='explore',label='Open exploration',reason='Your query leaves room to compare several angles.';
+ if(has(/\b(compare|versus| vs |difference|better than|pros and cons|alternatives)\b/)){intent='compare';label='Compare perspectives';reason='The wording asks for a comparison, so look for evidence on each side.'}
+ else if(has(/\b(latest|today|current|recent|this week|202[4-9]|news|update|announced)\b/)){intent='current';label='Current developments';reason='This looks time-sensitive; check publication dates and original announcements.'}
+ else if(has(/\b(why|how does|how do|explain|what is|what are|teach me|learn|meaning|basics|beginner)\b/)){intent='learn';label='Build understanding';reason='Start with clear explanations, then check primary or specialist sources.'}
+ else if(has(/\b(research|paper|study|evidence|citation|literature|journal|systematic review)\b/)){intent='research';label='Investigate evidence';reason='Prioritize research records, methods, dates, and cited original work.'}
+ else if(has(/\b(fix|solve|debug|error|how to|tutorial|steps|guide|repair)\b/)){intent='solve';label='Find a practical route';reason='Look for reproducible steps, documentation, and more than one tested approach.'}
+ else if(has(/\b(near me|nearby|where is|directions|restaurants|hotel|places to visit|address)\b/)){intent='place';label='Locate places';reason='Location details and opening information can change; verify them with the provider.'}
+ else if(has(/\b(price|buy|best .* (laptop|phone|camera|shoes|product)|review|cost|budget)\b/)){intent='product';label='Evaluate options';reason='Compare specifications, total cost, date, and independent reviews.'}
+ else if(has(/\b(history|origin|evolution|future|forecast|trend|over time|what happens if)\b/)){intent='patterns';label='Trace patterns and possibilities';reason='Separate documented historical patterns from uncertain forecasts.'}
+ return {intent,label,reason,query:q};
 }
-function escapeHTML(value) {
-  return String(value ?? '').replace(/[&<>"']/g, c => ({
-    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
-  })[c]);
+function makePathways(info){
+ const q=info.query,subject=q.replace(/[?!.]+$/,'').trim();
+ const plans={
+ compare:[['Compare the strongest arguments',' '+subject+' arguments for and against'],['Find independent evaluations',subject+' independent reviews and evaluation'],['Check original evidence',subject+' primary sources evidence']],
+ current:[['Find original announcements',subject+' official announcement'],['Compare independent coverage',subject+' independent reporting'],['Check the timeline',subject+' timeline dates context']],
+ learn:[['Start with a clear explanation','what is '+subject+' explained'],['Find a deeper technical source',subject+' technical overview'],['Explore a neighboring field',subject+' connections to other disciplines']],
+ research:[['Find scholarly literature',subject+' research papers literature review'],['Inspect methods and limitations',subject+' study methods limitations'],['Look for disagreement',subject+' conflicting findings debate']],
+ solve:[['Find practical instructions',subject+' step by step guide'],['Check official documentation',subject+' official documentation'],['Compare solutions and failure cases',subject+' troubleshooting alternatives']],
+ place:[['Explore maps and nearby options',subject+' map places'],['Verify official details',subject+' official hours contact'],['Compare recent visitor information',subject+' recent reviews accessibility']],
+ product:[['Compare specifications',subject+' specifications comparison'],['Find independent reviews',subject+' independent review'],['Check price and trade-offs',subject+' price long term cost']],
+ patterns:[['Trace the history',subject+' history timeline'],['Find data and trend analysis',subject+' data trends analysis'],['Explore competing explanations',subject+' alternative explanations uncertainty']],
+ explore:[['Find the fundamentals',' '+subject+' overview explained'],['Connect a neighboring discipline',subject+' interdisciplinary connections'],['Look for a counterpoint',subject+' criticism limitations alternative perspectives']]
+ };
+ return (plans[info.intent]||plans.explore).map(([label,query])=>({label,query:query.trim()}));
 }
-function setSearchLinks(query) {
-  const items = [
-    ['Google Books', 'https://books.google.com/books?q=' + encodeURIComponent(query)],
-    ['Scribd', 'https://www.google.com/search?q=' + encodeURIComponent('site:scribd.com/document ' + query)],
-    ['PDF search', 'https://www.google.com/search?q=' + encodeURIComponent(query + ' filetype:pdf')],
-    ['Google Scholar', 'https://scholar.google.com/scholar?q=' + encodeURIComponent(query)]
-  ];
-  $('links').innerHTML = items.map(([name, url]) =>
-    '<a href="' + url + '" target="_blank" rel="noopener">' + name + ' ↗</a>'
-  ).join(' · ');
+function renderIntelligencePanel(){
+ const host=$('intelligencePanel');if(!host||!activeQuery)return;
+ const info=understandQuery(activeQuery),paths=makePathways(info),route=providerPlan(info);
+ const cats=[['web','Web'],['images','Images'],['videos','Videos'],['news','News'],['research','Research'],['books','Books']];
+ const available=cats.map(([key,label])=>({key,label,count:results.filter(r=>r.category===key).length})).filter(x=>x.count>0);
+ const providers=[...new Set(results.map(r=>r.source))];
+
+function deriveConnections(){
+ const stop=new Set(('about after again also among because been before being between both could does doing down each from have into itself more most other over same should some such than that their them then there these they this through under until very what when where which while with would your using based find explore study studies research paper papers news latest official overview introduction understanding system systems method methods result results using used new first second one two').split(/\s+/));
+ const rows=results.filter(r=>r.title&&r.url),bridges=[];
+ const tokens=t=>new Set(norm(t).split(/[^a-z0-9]+/).filter(w=>w.length>=4&&!stop.has(w)&&!/^\\d+$/.test(w)));
+ const titleTokens=rows.map(r=>tokens(r.title)),docFreq=new Map();
+ titleTokens.forEach(set=>set.forEach(w=>docFreq.set(w,(docFreq.get(w)||0)+1)));
+ const rarity=w=>Math.log(1+(rows.length+1)/(1+(docFreq.get(w)||0)));
+ for(let i=0;i<rows.length;i++)for(let j=i+1;j<rows.length;j++){
+  const a=rows[i],b=rows[j];if(a.category===b.category)continue;
+  const shared=[...titleTokens[i]].filter(w=>titleTokens[j].has(w));
+  const weighted=shared.map(w=>({word:w,weight:rarity(w)})).sort((x,y)=>y.weight-x.weight);
+  if(!weighted.length||(!weighted.some(x=>x.weight>=1.25)&&weighted.length<2))continue;
+  const score=weighted.reduce((n,x)=>n+x.weight,0)+(new Set([a.source,b.source]).size>1?.15:0);
+  bridges.push({a,b,shared:weighted.map(x=>x.word),score,reason:weighted.length===1?'One relatively uncommon title term overlaps.':'Several title terms overlap, weighted toward terms rarer across this result set.'});
+ }
+ bridges.sort((a,b)=>b.score-a.score);const seen=new Set();
+ return bridges.filter(x=>{const k=[x.a.key,x.b.key].sort().join('|');if(seen.has(k))return false;seen.add(k);return true}).slice(0,3);
 }
-async function search() {
-  const query = $('q').value.trim();
-  if (!query) return;
-  const button = $('searchBtn');
-  button.disabled = true;
-  $('status').textContent = 'Searching public catalogs…';
-  setSearchLinks(query);
-  const before = data.length;
-  const errors = [];
-  const requests = [
-    fetch('https://openlibrary.org/search.json?q=' + encodeURIComponent(query) + '&limit=25')
-      .then(r => { if (!r.ok) throw Error('HTTP error'); return r.json(); })
-      .then(d => (d.docs || []).forEach(x => add({
-        title: x.title || 'Untitled',
-        url: x.key ? 'https://openlibrary.org' + x.key : 'https://openlibrary.org',
-        source: 'Open Library',
-        author: (x.author_name || []).slice(0, 3).join(', '),
-        description: [
-          x.first_publish_year ? 'First published ' + x.first_publish_year : '',
-          x.edition_count ? x.edition_count + ' editions' : ''
-        ].filter(Boolean).join(' · ')
-      }))).catch(() => errors.push('Open Library')),
-    fetch('https://www.googleapis.com/books/v1/volumes?q=' + encodeURIComponent(query) + '&maxResults=20')
-      .then(async r => {
-        let d = {};
-        try { d = await r.json(); } catch {}
-        if (r.status === 429 || d.error?.code === 429) {
-          errors.push('Google Books API quota exceeded (HTTP 429)');
-          return;
-        }
-        if (!r.ok || d.error) {
-          errors.push('Google Books API returned an error');
-          return;
-        }
-        (d.items || []).forEach(x => {
-          const v = x.volumeInfo || {};
-          add({
-            title: v.title || 'Untitled',
-            url: v.infoLink || v.previewLink || 'https://books.google.com',
-            source: 'Google Books',
-            author: (v.authors || []).join(', '),
-            description: [v.publishedDate, v.publisher].filter(Boolean).join(' · ')
-          });
-        });
-      }).catch(() => errors.push('Google Books could not be reached')),
-    fetch('https://archive.org/advancedsearch.php?q=' +
-      encodeURIComponent('(' + query + ') AND mediatype:(texts)') +
-      '&fl[]=identifier,title,creator,description,downloads&rows=25&output=json')
-      .then(r => { if (!r.ok) throw Error('HTTP error'); return r.json(); })
-      .then(d => (d.response?.docs || []).forEach(x => add({
-        title: x.title || x.identifier,
-        url: 'https://archive.org/details/' + encodeURIComponent(x.identifier),
-        source: 'Internet Archive',
-        author: Array.isArray(x.creator) ? x.creator.join(', ') : (x.creator || ''),
-        description: String(x.description || '').replace(/<[^>]*>/g, ' ').slice(0, 300),
-        downloads: x.downloads
-      }))).catch(() => errors.push('Internet Archive'))
-  ];
-  try {
-    await Promise.all(requests);
-    $('status').textContent = 'Added ' + (data.length - before) + ' new results. ' +
-      (errors.length ? 'Search finished with a source issue: ' + errors.join('; ') + '. Other available results are still shown.' : 'Search complete.');
-    render();
-  } finally {
-    button.disabled = false;
+ const guidance={
+ compare:'Do not treat a high result count as proof. Compare like with like and inspect the evidence behind each claim.',
+ current:'Check dates and original announcements. Search-index dates and event dates are not always the same.',
+ learn:'Move from an accessible explanation to a specialist source. A simple explanation is a starting point, not proof.',
+ research:'Inspect study design, sample, publication date, limitations, and whether independent work supports the conclusion.',
+ solve:'Prefer instructions that name prerequisites and versions. Cross-check critical steps against official documentation.',
+ place:'Verify details with the venue or map provider before travelling.',
+ product:'Separate advertising from independent testing. Compare the same model and account for price, warranty, and availability.',
+ patterns:'A pattern can suggest a hypothesis; it does not prove causation or guarantee a future outcome.',
+ explore:'Follow one path at a time, then deliberately look for an alternative explanation or a neighboring discipline.'
+ };
+ const connections=deriveConnections();
+ const prior=history.filter(x=>norm(x.q)!==norm(activeQuery)).slice(0,4);
+ const timeline=deriveTemporalPatterns();
+ const currentTrail=trails.find(t=>norm(t.query)===norm(activeQuery));
+ host.innerHTML='<div class="eyebrow">CRELICS INTELLIGENCE / '+esc(info.intent.toUpperCase())+'</div><div class="intelligence-head"><div><h2>'+esc(info.label)+'</h2><p>'+esc(info.reason)+'</p></div><span class="source-badge">Intent-aware</span></div><div class="status"><strong>Adaptive source route:</strong> '+esc(route.providers.join(' · '))+'<br>'+esc(route.why)+'</div><div class="result-actions" style="margin:12px 0"><button type="button" class="mini-btn '+(currentTrail?'saved':'')+'" data-save-trail="'+esc(currentTrail?.id||'')+'">'+(currentTrail?'✓ Investigation saved':'＋ Save investigation trail')+'</button><span class="subtle">Saves this query and a small snapshot of its sources in this browser.</span></div><div class="intelligence-grid"><section><div class="microtag">INVESTIGATION PATHS</div><div class="path-list">'+paths.map((p,i)=>'<button type="button" class="path-button" data-topic="'+esc(p.query)+'"><span class="path-number">0'+(i+1)+'</span><span><strong>'+esc(p.label)+'</strong><small>'+esc(p.query)+'</small></span><span aria-hidden="true">↗</span></button>').join('')+'</div></section><section><div class="microtag">EVIDENCE LENS / SPOCK + SHERLOCK</div><p>'+esc(guidance[info.intent]||guidance.explore)+'</p><div class="evidence-stats"><div><strong>'+results.length+'</strong><span>records gathered</span></div><div><strong>'+providers.length+'</strong><span>source labels</span></div><div><strong>'+available.length+'</strong><span>indexed categories</span></div></div><p class="subtle">These are coverage counts, not source-quality scores. CRELICS has not independently verified every result.</p></section></div><div class="microtag" style="margin-top:18px">DISCOVERY PORTALS / VALERIAN + LUCY</div><div class="portal-row">'+cats.map(([key,label])=>'<button type="button" class="topic" data-category="'+key+'" aria-label="Filter to '+label+'">'+label+' <span>'+results.filter(r=>r.category===key).length+'</span></button>').join('')+'</div><div class="intelligence-grid" style="margin-top:20px"><section><div class="microtag">LUCY / CROSS-CATEGORY CONNECTIONS</div><p class="subtle">Potential bridges surfaced from overlapping words in actual result titles across different categories. Shared wording is a lead to investigate, not proof of a substantive relationship.</p>'+(connections.length?'<div class="path-list">'+connections.map(x=>'<article class="connection-card"><div class="result-meta"><span class="source-badge">'+esc(x.a.category)+'</span><span>↔</span><span class="source-badge">'+esc(x.b.category)+'</span></div><p><a target="_blank" rel="noopener noreferrer" href="'+esc(x.a.url)+'">'+esc(x.a.title)+'</a></p><p><a target="_blank" rel="noopener noreferrer" href="'+esc(x.b.url)+'">'+esc(x.b.title)+'</a></p><small>Shared title terms: '+esc(x.shared.join(', '))+'</small><p class="subtle" style="font-size:11px;margin-bottom:0">'+esc(x.reason)+' This is a candidate link, not a verified relationship.</p></article>').join('')+'</div>':'<div class="empty">No cross-category title overlap found yet. Broaden the query or inspect more categories to look for possible connections.</div>')+'</section><section><div class="microtag">SHERLOCK / YOUR INVESTIGATION TRAIL</div><p class="subtle">Recent questions are stored locally in this browser. Reopen one to continue the trail.</p>'+(prior.length?'<div class="path-list">'+prior.map((x,i)=>'<button class="path-button" type="button" data-topic="'+esc(x.q)+'"><span class="path-number">'+(i+1)+'</span><span><strong>'+esc(x.q)+'</strong><small>'+esc(new Date(x.at).toLocaleString())+'</small></span><span>↗</span></button>').join('')+'</div>':'<div class="empty">This is the beginning of your investigation trail. Search another angle to build a path you can revisit.</div>')+'</section></div><div class="intelligence-grid" style="margin-top:20px"><section><div class="microtag">HARI SELDON / TEMPORAL PATTERNS</div><p class="subtle">Publication metadata can reveal how the indexed records are distributed over time. This describes the returned sample; it is not a forecast.</p>'+(timeline.length?'<div class="path-list">'+timeline.map(x=>'<article class="connection-card"><div class="result-meta"><span class="source-badge">'+esc(x.dateLabel)+'</span><span>'+esc(x.category)+'</span></div><p><a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">'+esc(x.title)+'</a></p><small>'+esc(x.dateMeaning)+'</small></article>').join('')+'</div><p class="subtle">Showing up to five dated records. Provider dates may mean publication, first publication, or date seen/indexed; these are not interchangeable.</p>':'<div class="empty">No usable date metadata in this result set yet. Try a news or research query.</div>')+'</section><section><div class="microtag">HOW TO READ A PATTERN</div><p>CRELICS reports dated evidence rather than predicting outcomes. A timeline can expose gaps or clusters worth investigating, but this provider-dependent sample cannot establish a trend or causation.</p><p class="subtle">Forecasting would require a defined outcome, suitable time series, transparent method, and uncertainty estimates. Result counts alone are not enough.</p></section></div><p class="subtle" style="margin-bottom:0">Your current question leads this process. These pathways are generated suggestions, not claims that matching sources already exist. Patterns and forecasts remain uncertain.</p>';
+}
+// Hari Seldon POV: show dated evidence from actual results, never invent a forecast.
+function deriveTemporalPatterns(){
+ const dated=results.map(r=>{
+  const raw=String(r.year||'').trim();
+  if(!raw)return null;
+  let d=null,meaning='Date supplied by provider';
+  const compact=raw.match(/^(\d{4})(\d{2})(\d{2})T/);
+  if(compact){d=new Date(Date.UTC(+compact[1],+compact[2]-1,+compact[3]));meaning='Date seen/indexed by news provider';}
+  else{
+   const year=raw.match(/^(\d{4})(?:$|[-/](\d{1,2})(?:[-/](\d{1,2}))?)$/);
+   if(year){d=new Date(Date.UTC(+year[1],year[2]?+year[2]-1:0,year[3]?+year[3]:1));meaning=year[2]?'Publication/date metadata supplied by provider':'Year-only metadata supplied by provider';}
   }
+  if(!d||Number.isNaN(d.getTime())||d.getUTCFullYear()<1000||d.getUTCFullYear()>2100)return null;
+  return {r,d,meaning};
+ }).filter(Boolean);
+ dated.sort((a,b)=>b.d-a.d);
+ const seen=new Set();
+ return dated.filter(x=>{const k=x.r.key;if(seen.has(k))return false;seen.add(k);return true}).slice(0,5).map(x=>({title:x.r.title,url:x.r.url,category:x.r.category,dateLabel:x.d.toISOString().slice(0,10),dateMeaning:x.meaning}));
 }
-function render() {
-  const selected = $('filter').value;
-  const sources = [...new Set(data.map(x => x.source))].sort();
-  $('filter').innerHTML = '<option value="all">All sources</option>' +
-    sources.map(s => '<option value="' + escapeHTML(s) + '">' + escapeHTML(s) + '</option>').join('');
-  $('filter').value = sources.includes(selected) ? selected : 'all';
-  const sort = $('sort').value;
-  const rows = data.filter(x => $('filter').value === 'all' || x.source === $('filter').value);
-  rows.sort((a, b) => sort === 'title'
-    ? a.title.localeCompare(b.title)
-    : sort === 'downloads'
-      ? (b.downloads ?? -1) - (a.downloads ?? -1)
-      : (b.views ?? -1) - (a.views ?? -1));
-  $('counts').textContent = rows.length + ' results · ' +
-    data.filter(x => x.views !== null).length + ' with known views · ' +
-    data.filter(x => x.downloads !== null).length + ' with download counts';
-  $('results').innerHTML = rows.length ? rows.map((x, i) =>
-    '<article class="result"><span class="tag">#' + (i + 1) + ' · ' + escapeHTML(x.source) +
-    '</span><h3><a target="_blank" rel="noopener" href="' + escapeHTML(x.url) + '">' +
-    escapeHTML(x.title) + '</a></h3><div class="muted">' +
-    escapeHTML(x.author || 'Author not listed') + '</div><p>' +
-    escapeHTML(x.description || '') + '</p><small>Views: <b>' +
-    (x.views === null ? 'Not provided' : x.views.toLocaleString()) +
-    '</b> · Downloads: <b>' +
-    (x.downloads === null ? 'Not provided' : x.downloads.toLocaleString()) +
-    '</b></small></article>'
-  ).join('') : 'No results yet. Search a topic or import a CSV.';
+function providerPlan(info){
+ const common=['web','images'];
+ const plans={
+ compare:{providers:[...common,'news','openlibrary','googlebooks','research'],why:'Comparison benefits from broad coverage across web reporting, books, and scholarly records.'},
+ current:{providers:[...common,'news','research'],why:'Time-sensitive queries prioritize web coverage, news, and dated research records.'},
+ learn:{providers:[...common,'openlibrary','googlebooks','videos','research'],why:'Learning queries emphasize explanatory web pages, books, video archives, and specialist literature.'},
+ research:{providers:[...common,'research','openlibrary','googlebooks','news'],why:'Research queries prioritize scholarly metadata while keeping broader context available.'},
+ solve:{providers:[...common,'openlibrary','googlebooks','videos'],why:'Practical questions prioritize web instructions and explanatory books or archived video.'},
+ place:{providers:[...common,'news'],why:'Place queries check web context and current reporting; maps remain an explicitly labelled external hand-off.'},
+ product:{providers:[...common,'news'],why:'Product queries check web context and current reporting; shopping remains an explicitly labelled external hand-off.'},
+ patterns:{providers:[...common,'news','research','openlibrary','googlebooks'],why:'Historical and trend queries compare dated reporting with scholarly records and books.'},
+ explore:{providers:[...common,'news','videos','openlibrary','googlebooks','research'],why:'Open exploration keeps a broad mix of web, visual, archival, book, and research sources.'}
+ };
+ const chosen=plans[info.intent]||plans.explore;
+ return {...chosen,providers:[...new Set(chosen.providers)]};
 }
-function parseCSV(text) {
-  const rows = [];
-  let row = [], value = '', quoted = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (quoted) {
-      if (c === '"' && text[i + 1] === '"') { value += '"'; i++; }
-      else if (c === '"') quoted = false;
-      else value += c;
-    } else if (c === '"') quoted = true;
-    else if (c === ',') { row.push(value); value = ''; }
-    else if (c === '\n') { row.push(value); rows.push(row); row = []; value = ''; }
-    else if (c !== '\r') value += c;
-  }
-  row.push(value);
-  if (row.some(Boolean)) rows.push(row);
-  return rows;
-}
-function importCSV(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    const rows = parseCSV(String(reader.result));
-    const headers = (rows.shift() || []).map(x => x.trim().toLowerCase());
-    let added = 0;
-    rows.forEach(row => {
-      const item = {};
-      headers.forEach((key, i) => item[key] = (row[i] || '').trim());
-      if (item.title && item.url) {
-        const previousLength = data.length;
-        add({
-          title: item.title, url: item.url, source: item.source || 'Imported CSV',
-          author: item.author, views: item.views, downloads: item.downloads,
-          description: item.description
-        });
-        if (data.length > previousLength) added++;
-      }
-    });
-    $('msg').textContent = 'Imported ' + added + ' new rows; duplicate URLs are skipped.';
-    render();
-  };
-  reader.readAsText(file);
-}
-function saveCSV(name, text) {
-  const a = document.createElement('a');
-  const url = URL.createObjectURL(new Blob([text], {type:'text/csv;charset=utf-8'}));
-  a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-function csvCell(value) {
-  const s = String(value ?? '');
-  return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-}
-function exportCSV() {
-  const headers = ['title','url','source','author','views','downloads','description'];
-  saveCSV('document-research-results.csv',
-    [headers, ...data.map(x => headers.map(k => x[k] ?? ''))]
-      .map(row => row.map(csvCell).join(',')).join('\r\n'));
-}
-function downloadTemplate() {
-  saveCSV('document-research-template.csv',
-    'title,url,source,author,views,downloads,description\r\nExample Python guide,https://example.com,Example,Author,12000,,Example document\r\n');
-}
-$('searchBtn').addEventListener('click', search);
-$('q').addEventListener('keydown', e => { if (e.key === 'Enter') search(); });
-$('sort').addEventListener('change', render);
-$('filter').addEventListener('change', render);
-$('file').addEventListener('change', importCSV);
-$('exportBtn').addEventListener('click', exportCSV);
-$('templateBtn').addEventListener('click', downloadTemplate);
-render();
+async function runSearch(q){q=String(q||'').trim().slice(0,300);if(!q||busy)return;busy=true;activeQuery=q;activeCategory='all';results=[];$('query').value=q;$('query2').value=q;$('searchBtn').disabled=true;go('search');setCategory('all');const initialRoute=providerPlan(understandQuery(q));$('searchStatus').innerHTML='<div class="status">Selecting sources for this query… '+esc(initialRoute.providers.join(' · '))+'</div>';$('resultList').innerHTML='';$('resultFootnote').textContent='';$('resultIntro').textContent='Exploring web pages, images, videos, news, research, and books for “'+q+'”.';saveHistory(q);renderHome();renderIntelligencePanel();const errs=[];const providerFailure=(label,error)=>{const message=String(error?.message||'');const detail=message.startsWith('Request timed out')?'timed out':message.startsWith('HTTP 429')?'rate limited':message.startsWith('HTTP ')?'HTTP error':'unavailable';errs.push(label+' ('+detail+')')};const add=(r)=>{const url=safeURL(r.url);if(!url||!r.title)return;const key=url.replace(/#.*$/,'').toLowerCase();if(results.some(x=>x.key===key))return;results.push({...r,url,key,image:safeURL(r.image)||'',category:classify(r.source,r.category),title:String(r.title).slice(0,500),description:String(r.description||'').replace(/<[^>]*>/g,' ').slice(0,650)})};const allTasks=[
+{id:'web',run:()=>jsonFetch('https://puri.li/api/search?q='+encodeURIComponent(q)+'&page=1').then(d=>{const rows=d.results||d.data?.results||d.items||[];rows.forEach(x=>add({title:x.title||x.name,url:x.url||x.link,source:'Open web',category:'web',description:x.snippet||x.description||x.content||'',author:x.domain||x.source||''}))}).catch(error=>providerFailure('Open web index',error))},
+{id:'images',run:()=>jsonFetch('https://puri.li/api/images?q='+encodeURIComponent(q)+'&page=1').then(d=>(d.images||[]).forEach(x=>add({title:x.title||'Image result',url:x.url||x.source,source:x.source||'Purili Images',category:'images',image:x.thumbUrl||x.thumbnail||x.url,description:[x.license?'License: '+x.license:'',x.width&&x.height?x.width+' × '+x.height:''].filter(Boolean).join(' · '),author:x.license||''}))).catch(error=>providerFailure('Images',error))},
+{id:'news',run:()=>jsonFetch('https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=ArtList&format=json&maxrecords=12&sort=HybridRel').then(d=>(d.articles||[]).forEach(x=>add({title:x.title,url:x.url,source:'GDELT News',category:'news',author:x.domain||x.source||'',year:x.seendate||'',description:x.socialimage?'News image available from source.':'News article indexed by GDELT.'}))).catch(error=>providerFailure('News',error))},
+{id:'videos',run:()=>jsonFetch('https://archive.org/advancedsearch.php?q='+encodeURIComponent('('+q+') AND mediatype:(movies)')+'&fl[]=identifier,title,creator,description,year&rows=15&output=json').then(d=>(d.response?.docs||[]).forEach(x=>add({title:x.title||x.identifier,url:'https://archive.org/details/'+encodeURIComponent(x.identifier),source:'Internet Archive Video',category:'videos',author:Array.isArray(x.creator)?x.creator.join(', '):(x.creator||''),year:x.year||'',description:String(x.description||'Publicly archived video or moving-image record.')}))).catch(error=>providerFailure('Archived videos',error))},
+{id:'openlibrary',run:()=>jsonFetch('https://openlibrary.org/search.json?q='+encodeURIComponent(q)+'&limit=15').then(d=>(d.docs||[]).forEach(x=>add({title:x.title,url:x.key?'https://openlibrary.org'+x.key:'https://openlibrary.org',source:'Open Library',category:'books',author:(x.author_name||[]).slice(0,3).join(', '),year:x.first_publish_year||null,description:[x.first_publish_year?'First published '+x.first_publish_year:'',x.edition_count?x.edition_count+' editions':''].filter(Boolean).join(' · ')}))).catch(error=>providerFailure('Open Library',error))},
+{id:'googlebooks',run:()=>jsonFetch('https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent(q)+'&maxResults=10').then(d=>(d.items||[]).forEach(x=>{const v=x.volumeInfo||{};add({title:v.title,url:v.infoLink||v.previewLink||'https://books.google.com',source:'Google Books',category:'books',author:(v.authors||[]).join(', '),year:v.publishedDate||'',description:[v.description,v.publisher].filter(Boolean).join(' · '),image:v.imageLinks?.thumbnail||''})})).catch(error=>providerFailure('Google Books',error))},
+{id:'research',run:()=>jsonFetch('https://api.crossref.org/works?query='+encodeURIComponent(q)+'&rows=12&select=title,author,published,URL,abstract,type').then(d=>(d.message?.items||[]).forEach(x=>add({title:Array.isArray(x.title)?x.title[0]:'Untitled research work',url:x.URL,source:'Crossref',category:'research',author:(x.author||[]).slice(0,3).map(a=>[a.given,a.family].filter(Boolean).join(' ')).join(', '),year:x.published?.['date-parts']?.[0]?.join('-')||'',description:String(x.abstract||'').replace(/<[^>]*>/g,' ').slice(0,650)}))).catch(error=>providerFailure('Crossref',error))}
+];const route=providerPlan(understandQuery(q));const selected=allTasks.filter(t=>route.providers.includes(t.id));const tasks=selected.map(t=>t.run());;try{await Promise.all(tasks);add({title:'Search YouTube for “'+q+'”',url:'https://www.youtube.com/results?search_query='+encodeURIComponent(q),source:'YouTube search',category:'videos',description:'Open YouTube to browse live video results. Direct video indexing is not enabled because YouTube requires an API credential.'});add({title:'Explore products for “'+q+'”',url:'https://www.google.com/search?tbm=shop&q='+encodeURIComponent(q),source:'Google Shopping hand-off',category:'products',description:'Open product listings on Google Shopping. CRELICS does not yet have a dedicated product index.'});add({title:'Explore places related to “'+q+'”',url:'https://www.google.com/maps/search/'+encodeURIComponent(q),source:'Google Maps hand-off',category:'places',description:'Open map and place results. Place listings are supplied by Google Maps, not indexed directly by CRELICS.'});add({title:'Find discussions about “'+q+'”',url:'https://www.reddit.com/search/?q='+encodeURIComponent(q),source:'Reddit search hand-off',category:'discussions',description:'Browse public discussions on Reddit. This opens the provider search; discussions are not indexed directly by CRELICS.'});renderResults();renderIntelligencePanel();const msg=results.length?(results.length+' results gathered across available web and specialist providers.'):'No results were returned by the available providers.';const warning=errs.length?' Some providers were unavailable: '+errs.join(', ')+'.':'';$('searchStatus').innerHTML='<div class="status '+(!results.length?'error':'')+'">'+esc(msg+warning)+'</div>';if(!results.length)$('resultList').innerHTML='<div class="empty"><strong>No results returned</strong>Try broader terms or check your connection. CRELICS does not invent results when a provider is unavailable.</div>';$('resultFootnote').textContent='Coverage depends on independent provider indexes and their availability. This prototype does not crawl or index the entire internet. Video, product, place, and discussion discovery include clearly labelled provider hand-offs where direct indexing is not enabled. Images are retrieved through Purili’s image endpoint.'}finally{busy=false;$('searchBtn').disabled=false}}
+const SEARCH_STOP_WORDS=new Set(['a','an','and','are','as','at','be','by','for','from','how','in','into','is','it','of','on','or','the','to','was','what','when','where','which','who','why','with']);
+function searchTerms(value){return (String(value||'').toLowerCase().match(/[\p{L}\p{N}]+/gu)||[]).filter(Boolean)}
+function relevanceScore(r){const q=norm(activeQuery),title=norm(r.title),desc=norm(r.description),authors=norm(r.author),terms=[...new Set(searchTerms(q).filter(x=>x.length>1&&!SEARCH_STOP_WORDS.has(x)))];if(!terms.length)return 0;const titleTerms=searchTerms(title),descTerms=searchTerms(desc),authorTerms=searchTerms(authors);const titleSet=new Set(titleTerms),descSet=new Set(descTerms),authorSet=new Set(authorTerms);let score=0,matchedTitle=0,matchedDesc=0;for(const word of terms){if(titleSet.has(word)){score+=5;matchedTitle++}else if(titleTerms.some(token=>token.startsWith(word)&&word.length>=4)){score+=2.5;matchedTitle++}if(descSet.has(word)){score+=1.25;matchedDesc++}if(authorSet.has(word))score+=.4}const titleCoverage=matchedTitle/terms.length,descCoverage=matchedDesc/terms.length;if(titleCoverage===1)score+=5;else score+=titleCoverage*2;if(descCoverage===1)score+=1.5;if(q.length>=5&&title.includes(q))score+=8;if(q.length>=5&&desc.includes(q))score+=2;if(prefs.personalization&&Array.isArray(prefs.interests)){const interestTerms=prefs.interests.flatMap(searchTerms);if(interestTerms.some(word=>word.length>2&&titleSet.has(word)))score+=.35}return score}
+function relevanceReasons(r){const q=norm(activeQuery),terms=[...new Set(searchTerms(q).filter(x=>x.length>1&&!SEARCH_STOP_WORDS.has(x)))];if(!terms.length)return ['No query terms available to explain this match'];const titleTerms=searchTerms(r.title),descTerms=searchTerms(r.description),authorTerms=searchTerms(r.author),titleSet=new Set(titleTerms),descSet=new Set(descTerms),authorSet=new Set(authorTerms);const titleHits=terms.filter(word=>titleSet.has(word)||titleTerms.some(token=>token.startsWith(word)&&word.length>=4));const descHits=terms.filter(word=>descSet.has(word));const authorHits=terms.filter(word=>authorSet.has(word));const reasons=[];if(q.length>=5&&norm(r.title).includes(q))reasons.push('Exact query phrase in title');else if(titleHits.length)reasons.push(titleHits.length+' query term'+(titleHits.length===1?'':'s')+' matched in title');if(q.length>=5&&norm(r.description).includes(q))reasons.push('Exact query phrase in description');else if(descHits.length)reasons.push(descHits.length+' query term'+(descHits.length===1?'':'s')+' matched in description');if(authorHits.length)reasons.push('Query terms matched in author or publisher');if(prefs.personalization&&Array.isArray(prefs.interests)){const interestTerms=prefs.interests.flatMap(searchTerms);if(interestTerms.some(word=>word.length>2&&titleSet.has(word)))reasons.push('Title overlaps with a selected interest');}return reasons.length?reasons:['No strong text overlap detected; this result may be included by its provider or category.']}
+function metadataAudit(r){const fields=[['source',!!String(r.source||'').trim()],['author or publisher',!!String(r.author||'').trim()],['date',!!String(r.year||'').trim()],['description',!!String(r.description||'').trim()]];const present=fields.filter(x=>x[1]).map(x=>x[0]);const missing=fields.filter(x=>!x[1]).map(x=>x[0]);return {count:present.length,total:fields.length,present,missing}}
+function renderResults(){const filter=$('sourceFilter').value,sort=$('sortBy').value;const sources=[...new Set(results.map(r=>r.source))].sort();$('sourceFilter').innerHTML='<option value="all">All sources</option>'+sources.map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join('');$('sourceFilter').value=sources.includes(filter)?filter:'all';let rows=results.filter(r=>(activeCategory==='all'||r.category===activeCategory)&&($('sourceFilter').value==='all'||r.source===$('sourceFilter').value));if(sort==='title')rows.sort((a,b)=>a.title.localeCompare(b.title));else if(sort==='newest')rows.sort((a,b)=>String(b.year||'').localeCompare(String(a.year||'')));else rows.sort((a,b)=>relevanceScore(b)-relevanceScore(a));$('resultList').innerHTML=rows.map((r,i)=>{const isSaved=saved.some(s=>s.key===r.key),audit=metadataAudit(r);return '<article class="result-card"><div class="result-meta"><span class="source-badge">'+esc(r.source)+'</span><span>'+esc((r.category||'web').toUpperCase())+'</span>'+(r.year?'<span>'+esc(r.year)+'</span>':'')+'<span class="source-badge" title="Metadata completeness only. This is not a credibility or truthfulness score.">Metadata '+audit.count+'/'+audit.total+'</span></div><h3><a href="'+esc(r.url)+'" target="_blank" rel="noopener noreferrer">'+esc(r.title)+'</a></h3>'+(r.image?'<a href="'+esc(r.url)+'" target="_blank" rel="noopener noreferrer"><img class="result-thumb" loading="lazy" src="'+esc(r.image)+'" alt="'+esc(r.title)+'"></a>':'')+'<div class="result-meta">'+esc(r.author||'Author or publisher not provided')+'</div>'+(r.description?'<p>'+esc(r.description)+'</p>':'')+'<details class="metadata-details"><summary>Why this result?</summary><p>These are text-match signals, not a measure of truth, quality, or credibility.</p><ul>'+relevanceReasons(r).map(reason=>'<li>'+esc(reason)+'</li>').join('')+'</ul></details><details class="metadata-details"><summary>Source details and missing metadata</summary><p><strong>Provided:</strong> '+esc(audit.present.join(', ')||'No standard metadata fields')+'</p><p><strong>Not provided:</strong> '+esc(audit.missing.join(', ')||'None of these fields')+'</p><p class="subtle">Completeness helps you decide what to inspect next. It does not establish accuracy, independence, expertise, or trustworthiness. Open the original source and check its evidence.</p></details><div class="result-actions"><button class="mini-btn '+(isSaved?'saved':'')+'" data-save="'+esc(r.key)+'">'+(isSaved?'✓ Saved':'♡ Save source')+'</button><button class="mini-btn" data-copy="'+esc(r.key)+'">Copy source link</button></div></article>'}).join('');if(!rows.length)$('resultList').innerHTML='<div class="empty"><strong>No '+esc(activeCategory==='all'?'':activeCategory+' ')+'results in this view</strong>Try another category, broaden the query, or check which providers are available.</div>'}
+function renderExplore(){const interest=prefs.interests.length?prefs.interests:topics.slice(0,6);const blurbs=['Find introductory and advanced source material.','Look for research, books, and original records.','Follow a question into neighboring disciplines.','Compare different approaches and viewpoints.'];$('exploreGrid').innerHTML=interest.map((t,i)=>'<article class="discovery-card"><div><div class="microtag">'+(prefs.interests.length?'SELECTED INTEREST':'POSSIBLE DIRECTION')+'</div><h3>'+esc(t)+'</h3><p>'+blurbs[i%blurbs.length]+'</p></div><button class="card-link" data-action="topic" data-topic="'+esc(t)+'">Search this subject →</button></article>').join('');$('interestMap').innerHTML=interest.length?'<div class="choice-row">'+interest.map(t=>'<span class="topic">'+esc(t)+'</span>').join('')+'</div><p style="margin-bottom:0">These topics come from your selected interests, not hidden information about you.</p>':'No interests selected yet. Add a few in Personalize to make this space more relevant.'}
+function renderSaved(){const sourceSection=saved.length?'<div class="microtag">SAVED SOURCES</div>'+saved.map(r=>'<article class="result-card"><div class="result-meta"><span class="source-badge">'+esc(r.source)+'</span><span>Saved source</span></div><h3><a href="'+esc(r.url)+'" target="_blank" rel="noopener noreferrer">'+esc(r.title)+'</a></h3><div class="result-meta">'+esc(r.author||'Author not listed')+'</div><p>'+esc(r.description||'')+'</p><div class="result-actions"><button class="mini-btn" data-remove="'+esc(r.key)+'">Remove from saved</button></div></article>').join(''):'<div class="empty"><strong>No saved sources yet</strong>Save useful results to keep them here in this browser.</div>';const trailSection=trails.length?'<div class="microtag" style="margin-top:24px">SAVED INVESTIGATION TRAILS</div>'+trails.map(t=>'<article class="result-card"><div class="result-meta"><span class="source-badge">'+esc(t.intent||'explore')+'</span><span>'+esc(new Date(t.at).toLocaleString())+'</span></div><h3>'+esc(t.query)+'</h3><p>'+esc((t.sources||[]).length+' source snapshots · '+(t.providers||[]).length+' provider labels')+'</p>'+((t.sources||[]).length?'<div class="path-list">'+t.sources.map(s=>'<p><a href="'+esc(s.url)+'" target="_blank" rel="noopener noreferrer">'+esc(s.title)+'</a><small> · '+esc(s.source||s.category||'Source')+'</small></p>').join('')+'</div>':'')+'<div class="result-actions"><button class="mini-btn" data-topic="'+esc(t.query)+'">Reopen investigation</button><button class="mini-btn" data-remove-trail="'+esc(t.id)+'">Delete trail</button></div></article>').join(''):'<div class="empty" style="margin-top:20px"><strong>No saved investigation trails</strong>Save a trail from the intelligence panel after searching a question. Trails stay in this browser and can be deleted here.</div>';$('savedList').innerHTML=sourceSection+trailSection}
+function renderSettings(){const goalOptions=[['explore','Discover unexpected connections'],['research','Research and compare evidence'],['learn','Learn a subject step by step'],['solve','Find practical answers']];const depthOptions=[['concise','Concise'],['balanced','Balanced'],['detailed','Detailed']];const interestSet=new Set(prefs.interests);$('settingsContent').innerHTML='<div class="workspace-grid"><article class="panel"><h3>Your starting point</h3><p>Choose what you most often want to do. You can change this whenever your goal changes.</p><div class="field"><label for="profileName">Optional name or label</label><input id="profileName" maxlength="28" value="'+esc(prefs.profileName)+'" placeholder="What should we call this space?"></div><div class="field"><label for="goalSelect">Primary goal</label><select id="goalSelect">'+goalOptions.map(([v,l])=>'<option value="'+v+'" '+(prefs.goal===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div><div class="field"><label for="depthSelect">Preferred explanation depth</label><select id="depthSelect">'+depthOptions.map(([v,l])=>'<option value="'+v+'" '+(prefs.depth===v?'selected':'')+'>'+l+'</option>').join('')+'</select></div><div class="field"><label>Interests</label><div class="choice-row">'+topics.map(t=>'<button type="button" class="choice" data-interest="'+esc(t)+'" aria-pressed="'+interestSet.has(t)+'">'+esc(t)+'</button>').join('')+'</div><p>Pick as many as you like, or none. Interests personalize suggestions, not the truthfulness of results.</p></div></article><article class="panel"><h3>How CRELICS adapts</h3><p>Personalization is designed to be transparent and reversible.</p><div class="field"><label><input id="personalizationToggle" type="checkbox" '+(prefs.personalization?'checked':'')+' style="width:auto;margin-right:7px">Use personalization</label><p>Use your selected preferences and CRELICS activity on this browser to adapt the interface.</p></div><div class="field"><label><input id="suggestionsToggle" type="checkbox" '+(prefs.showSuggestions?'checked':'')+' style="width:auto;margin-right:7px">Show personalized suggestions</label></div><div class="field"><label for="layoutSelect">Homepage density</label><select id="layoutSelect"><option value="adaptive" '+(prefs.layout==='adaptive'?'selected':'')+'>Adaptive</option><option value="compact" '+(prefs.layout==='compact'?'selected':'')+'>Compact</option><option value="expanded" '+(prefs.layout==='expanded'?'selected':'')+'>Expanded</option></select></div><div class="status">Local-first: preferences, search history, and saved sources stay in this browser in this prototype. Search queries are sent to the public source providers used to retrieve results.</div><button class="primary" id="savePrefs">Save preferences</button></article></div><div class="section-head"><div><h2>Your data controls</h2><p>Inspect or remove what this browser has saved for CRELICS.</p></div></div><div class="panel"><p><strong>Saved locally:</strong> '+history.length+' recent searches · '+saved.length+' saved sources · '+prefs.interests.length+' selected interests.</p><div class="result-actions"><button class="mini-btn" id="clearHistory">Clear search history</button><button class="mini-btn" id="clearSaved">Clear saved sources</button><button class="mini-btn" id="resetAll">Reset all personalization</button></div></div>'}
+function savePrefsFromForm(){prefs.profileName=$('profileName').value.trim();prefs.goal=$('goalSelect').value;prefs.depth=$('depthSelect').value;prefs.personalization=$('personalizationToggle').checked;prefs.showSuggestions=$('suggestionsToggle').checked;prefs.layout=$('layoutSelect').value;prefs.onboardingSeen=true;store(KEY,prefs);renderHome();renderNav();$('profileChip').textContent=profileLabel();renderSettings();go('settings')}
+function toggleInterest(t){prefs.interests=prefs.interests.includes(t)?prefs.interests.filter(x=>x!==t):[...prefs.interests,t];store(KEY,prefs);renderSettings();renderHome();renderExplore()}
+function toggleSave(key){const existing=results.find(r=>r.key===key)||saved.find(r=>r.key===key);if(!existing)return;if(saved.some(s=>s.key===key))saved=saved.filter(s=>s.key!==key);else saved=[{...existing,savedAt:Date.now()},...saved].slice(0,100);store(SAVED,saved);renderResults();renderNav();if(activeView==='saved')renderSaved()}
+function saveInvestigationTrail(){if(!activeQuery)return;const entry={id:'trail-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),query:activeQuery,at:Date.now(),intent:understandQuery(activeQuery).intent,providers:[...new Set(results.map(r=>r.source))].slice(0,12),sources:results.slice(0,8).map(r=>({title:r.title,url:r.url,source:r.source,category:r.category,key:r.key}))};trails=[entry,...trails.filter(t=>norm(t.query)!==norm(activeQuery))].slice(0,30);store(TRAILS,trails);renderIntelligencePanel();if(activeView==='saved')renderSaved()}
+function removeTrail(id){trails=trails.filter(t=>t.id!==id);store(TRAILS,trails);renderSaved();if(activeQuery)renderIntelligencePanel()}
+function handleAction(action,topic){if(action==='saved'){go('saved');return}if(action==='recent'&&topic){runSearch(topic);return}if(action==='topic'&&topic){runSearch(topic);return}}
+document.addEventListener('click',e=>{const view=e.target.closest('[data-view]');if(view){go(view.dataset.view);return}const saveTrail=e.target.closest('[data-save-trail]');if(saveTrail){saveInvestigationTrail();return}const removeTrailBtn=e.target.closest('[data-remove-trail]');if(removeTrailBtn){removeTrail(removeTrailBtn.dataset.removeTrail);return}const topic=e.target.closest('[data-topic]');if(topic){handleAction('topic',topic.dataset.topic);return}const action=e.target.closest('[data-action]');if(action){handleAction(action.dataset.action,action.dataset.topic);return}const interest=e.target.closest('[data-interest]');if(interest){toggleInterest(interest.dataset.interest);return}const save=e.target.closest('[data-save]');if(save){toggleSave(save.dataset.save);return}const remove=e.target.closest('[data-remove]');if(remove){saved=saved.filter(s=>s.key!==remove.dataset.remove);store(SAVED,saved);renderSaved();renderNav();return}const copy=e.target.closest('[data-copy]');if(copy){const r=results.find(x=>x.key===copy.dataset.copy);if(r&&navigator.clipboard?.writeText){navigator.clipboard.writeText(r.url).then(()=>{copy.textContent='Copied ✓'}).catch(()=>window.prompt('Copy source URL',r.url))}else if(r)window.prompt('Copy source URL',r.url)}});
+document.addEventListener('click',e=>{const tab=e.target.closest('[data-category]');if(tab)setCategory(tab.dataset.category)});let suggestTimer=null,lastSuggest='';async function updateSuggestions(raw){const q=String(raw||'').trim();if(q.length<3||q===lastSuggest)return;lastSuggest=q;try{const data=await jsonFetch('https://puri.li/api/suggest?q='+encodeURIComponent(q));if(!Array.isArray(data))return;$('querySuggestions').innerHTML=data.slice(0,8).map(v=>'<option value="'+esc(String(v).slice(0,160))+'"></option>').join('')}catch{/* Suggestions are optional; search remains available. */}}$('query').addEventListener('input',e=>{clearTimeout(suggestTimer);suggestTimer=setTimeout(()=>updateSuggestions(e.target.value),220)});$('query2').addEventListener('input',e=>{clearTimeout(suggestTimer);suggestTimer=setTimeout(()=>updateSuggestions(e.target.value),220)});$('searchForm').addEventListener('submit',e=>{e.preventDefault();runSearch($('query').value)});$('searchForm2').addEventListener('submit',e=>{e.preventDefault();runSearch($('query2').value)});$('themeBtn').addEventListener('click',setTheme);$('settingsTop').addEventListener('click',()=>go('settings'));$('editInterests').addEventListener('click',()=>go('settings'));$('sourceFilter').addEventListener('change',renderResults);$('sortBy').addEventListener('change',renderResults);$('clearSearch').addEventListener('click',()=>{results=[];activeQuery='';$('searchStatus').innerHTML='';$('resultList').innerHTML='<div class="empty"><strong>Search cleared</strong>Enter a new question to begin.</div>';go('search')});
+document.addEventListener('click',e=>{if(e.target.id==='savePrefs')savePrefsFromForm();if(e.target.id==='clearHistory'){history=[];store(HISTORY,history);renderHome();renderSettings()}if(e.target.id==='clearSaved'){saved=[];store(SAVED,saved);renderNav();renderSettings()}if(e.target.id==='resetAll'){if(confirm('Reset CRELICS preferences, interests, history, and saved sources in this browser?')){prefs=structuredCloneSafe(defaultPrefs);history=[];saved=[];[KEY,HISTORY,SAVED].forEach(k=>localStorage.removeItem(k));renderHome();renderSettings();renderNav()}}});
+applyTheme();renderNav();renderHome();if(!prefs.onboardingSeen){/* onboarding remains optional; search is immediately available */}if('serviceWorker' in navigator && location.protocol==='https:'){/* no service worker registered in this prototype */}
 </script>
 </body>
 </html>
