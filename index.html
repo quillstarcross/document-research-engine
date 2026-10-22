@@ -115,7 +115,7 @@ function renderIntelligencePanel(){
  const providers=[...new Set(results.map(r=>r.source))];
 
 function deriveConnections(){
- const stop=new Set(('about after again also among because been before being between both could does doing down each from have into itself more most other over same should some such than that their them then there these they this through under until very what when where which while with would your using based find explore').split(/\\s+/));
+ const stop=new Set(('about after again also among because been before being between both could does doing down each from have into itself more most other over same should some such than that their them then there these they this through under until very what when where which while with would your using based find explore').split(/\s+/));
  const rows=results.filter(r=>r.title&&r.url),bridges=[];
  const tokens=t=>new Set(norm(t).split(/[^a-z0-9]+/).filter(w=>w.length>=5&&!stop.has(w)));
  for(let i=0;i<rows.length;i++)for(let j=i+1;j<rows.length;j++){
