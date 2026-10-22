@@ -151,7 +151,7 @@ function deriveTemporalPatterns(){
   const compact=raw.match(/^(\\d{4})(\\d{2})(\\d{2})T/);
   if(compact){d=new Date(Date.UTC(+compact[1],+compact[2]-1,+compact[3]));meaning='Date seen/indexed by news provider';}
   else{
-   const year=raw.match(/^(\\d{4})(?:[-/](\\d{1,2})(?:[-/](\\d{1,2}))?)?/);
+   const year=raw.match(/^(\d{4})(?:$|[-/](\d{1,2})(?:[-/](\d{1,2}))?)$/);
    if(year){d=new Date(Date.UTC(+year[1],year[2]?+year[2]-1:0,year[3]?+year[3]:1));meaning=year[2]?'Publication/date metadata supplied by provider':'Year-only metadata supplied by provider';}
   }
   if(!d||Number.isNaN(d.getTime())||d.getUTCFullYear()<1000||d.getUTCFullYear()>2100)return null;
