@@ -53,6 +53,10 @@ const KEY='crelics.preferences.v1', HISTORY='crelics.history.v1', SAVED='crelics
 const $=id=>document.getElementById(id);
 const defaultPrefs={goal:'explore',depth:'balanced',layout:'adaptive',interests:[],showSuggestions:true,personalization:true,profileName:'',onboardingSeen:false};
 let prefs=load(KEY,defaultPrefs), history=load(HISTORY,[]), saved=load(SAVED,[]), results=[], activeQuery='', activeView='home', busy=false;
+let activeCategory='all';
+function classify(source,category){if(category)return category;const s=String(source||'').toLowerCase();if(s.includes('youtube')||s.includes('video')||s.includes('archive video'))return 'videos';if(s.includes('news')||s.includes('gdelt'))return 'news';if(s.includes('crossref')||s.includes('research')||s.includes('scholar'))return 'research';if(s.includes('book')||s.includes('library'))return 'books';if(s.includes('image')||s.includes('commons'))return 'images';return 'web'}
+function setCategory(category){activeCategory=category;document.querySelectorAll('[data-category]').forEach(tab=>tab.setAttribute('aria-selected',String(tab.dataset.category===category)));if(typeof renderResults==='function')renderResults()}
+
 const topics=['Artificial intelligence','Physics','Robotics','Climate science','Psychology','Computer science','History','Design'];
 const navItems=[['home','⌂','Home'],['search','⌕','Search'],['explore','✳','Explore'],['saved','♡','Saved'],['settings','⚙','Personalize']];
 function load(k,fallback){try{const x=JSON.parse(localStorage.getItem(k));return x===null?structuredCloneSafe(fallback):x}catch{return structuredCloneSafe(fallback)}}
