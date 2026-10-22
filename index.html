@@ -116,13 +116,19 @@ function renderIntelligencePanel(){
  const providers=[...new Set(results.map(r=>r.source))];
 
 function deriveConnections(){
- const stop=new Set(('about after again also among because been before being between both could does doing down each from have into itself more most other over same should some such than that their them then there these they this through under until very what when where which while with would your using based find explore').split(/\s+/));
+ const stop=new Set(('about after again also among because been before being between both could does doing down each from have into itself more most other over same should some such than that their them then there these they this through under until very what when where which while with would your using based find explore study studies research paper papers news latest official overview introduction understanding system systems method methods result results using used new first second one two').split(/\s+/));
  const rows=results.filter(r=>r.title&&r.url),bridges=[];
- const tokens=t=>new Set(norm(t).split(/[^a-z0-9]+/).filter(w=>w.length>=5&&!stop.has(w)));
+ const tokens=t=>new Set(norm(t).split(/[^a-z0-9]+/).filter(w=>w.length>=4&&!stop.has(w)&&!/^\\d+$/.test(w)));
+ const titleTokens=rows.map(r=>tokens(r.title)),docFreq=new Map();
+ titleTokens.forEach(set=>set.forEach(w=>docFreq.set(w,(docFreq.get(w)||0)+1)));
+ const rarity=w=>Math.log(1+(rows.length+1)/(1+(docFreq.get(w)||0)));
  for(let i=0;i<rows.length;i++)for(let j=i+1;j<rows.length;j++){
   const a=rows[i],b=rows[j];if(a.category===b.category)continue;
-  const ta=tokens(a.title),tb=tokens(b.title),shared=[...ta].filter(w=>tb.has(w));
-  if(shared.length)bridges.push({a,b,shared,score:shared.reduce((n,w)=>n+Math.min(w.length,10),0)});
+  const shared=[...titleTokens[i]].filter(w=>titleTokens[j].has(w));
+  const weighted=shared.map(w=>({word:w,weight:rarity(w)})).sort((x,y)=>y.weight-x.weight);
+  if(!weighted.length||(!weighted.some(x=>x.weight>=1.25)&&weighted.length<2))continue;
+  const score=weighted.reduce((n,x)=>n+x.weight,0)+(new Set([a.source,b.source]).size>1?.15:0);
+  bridges.push({a,b,shared:weighted.map(x=>x.word),score,reason:weighted.length===1?'One relatively uncommon title term overlaps.':'Several title terms overlap, weighted toward terms rarer across this result set.'});
  }
  bridges.sort((a,b)=>b.score-a.score);const seen=new Set();
  return bridges.filter(x=>{const k=[x.a.key,x.b.key].sort().join('|');if(seen.has(k))return false;seen.add(k);return true}).slice(0,3);
