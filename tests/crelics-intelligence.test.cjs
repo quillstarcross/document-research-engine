@@ -80,7 +80,7 @@ test('temporal lens sorts newest first and caps output at five', () => {
 test('cross-category connections suppress generic overlap and explain candidate links', () => {
   const htmlSource = fs.readFileSync('index.html', 'utf8');
   const start = htmlSource.indexOf('function deriveConnections(){');
-  const end = htmlSource.indexOf('\\n const guidance=', start);
+  const end = htmlSource.indexOf('\n const guidance=', start);
   assert.notEqual(start, -1);
   assert.notEqual(end, -1);
   const local = { results: [
@@ -102,7 +102,7 @@ test('cross-category connections suppress generic overlap and explain candidate 
 test('jsonFetch passes an abort signal and returns parsed JSON', async () => {
   const htmlSource = fs.readFileSync('index.html', 'utf8');
   const start = htmlSource.indexOf('async function jsonFetch(');
-  const end = htmlSource.indexOf('\\nasync \\n// CRELICS query intelligence:', start);
+  const end = htmlSource.indexOf('\nasync \n// CRELICS query intelligence:', start);
   assert.notEqual(start, -1);
   assert.notEqual(end, -1);
   let receivedSignal;
