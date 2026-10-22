@@ -76,3 +76,18 @@ test('temporal lens sorts newest first and caps output at five', () => {
   assert.equal(timeline[0].dateLabel, '2025-01-01');
   assert.equal(timeline[4].dateLabel, '2021-01-01');
 });
+
+test('cross-category connections suppress generic overlap and explain candidate links', () => {
+  context.results = [
+    { title: 'Introduction to quantum sensors', url: 'https://example.org/a', key: 'a', category: 'web', source: 'Open web' },
+    { title: 'Introduction to quantum sensors and medicine', url: 'https://example.org/b', key: 'b', category: 'research', source: 'Crossref' },
+    { title: 'Quantum sensors for archaeology', url: 'https://example.org/c', key: 'c', category: 'news', source: 'GDELT' },
+    { title: 'Introduction to systems and methods', url: 'https://example.org/d', key: 'd', category: 'books', source: 'Open Library' }
+  ];
+  const connections = context.deriveConnections();
+  assert.ok(connections.length > 0);
+  assert.ok(connections.every(x => x.a.category !== x.b.category));
+  assert.ok(connections.every(x => x.shared.length >= 1));
+  assert.ok(connections.every(x => typeof x.reason === 'string' && x.reason.length > 0));
+  assert.ok(!connections.some(x => x.shared.length === 1 && ['introduction', 'systems', 'methods'].includes(x.shared[0])));
+});
