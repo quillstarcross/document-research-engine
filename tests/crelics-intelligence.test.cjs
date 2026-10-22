@@ -33,6 +33,26 @@ test('query-aware ranking rewards exact phrases, title matches, and term coverag
   assert.equal(local.relevanceScore({ title: 'Unrelated subject', description: '', author: '' }), 0);
 });
 
+test('tokenizer handles punctuation and Unicode while ranking ignores common stop words', () => {
+  const htmlSource = fs.readFileSync('index.html', 'utf8');
+  const start = htmlSource.indexOf('const SEARCH_STOP_WORDS=');
+  const end = htmlSource.indexOf('function metadataAudit(', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const local = {
+    activeQuery: 'the café: quantum-sensors!',
+    prefs: { personalization: false, interests: [] },
+    norm: s => String(s || '').trim().toLowerCase(),
+    Set, String, Array, Math
+  };
+  vm.createContext(local);
+  vm.runInContext(htmlSource.slice(start, end), local);
+  assert.deepEqual(Array.from(local.searchTerms('café, quantum-sensors!')), ['café', 'quantum', 'sensors']);
+  const good = local.relevanceScore({ title: 'Café quantum sensors', description: '', author: '' });
+  const weak = local.relevanceScore({ title: 'The guide to sensors', description: '', author: '' });
+  assert.ok(good > weak);
+});
+
 test('safeURL rejects executable and non-web URL schemes', () => {
   const htmlSource = fs.readFileSync('index.html', 'utf8');
   const safeStart = htmlSource.indexOf('function safeURL(');
