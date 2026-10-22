@@ -82,14 +82,14 @@ function understandQuery(raw){
  const q=String(raw||'').trim(),n=norm(q);
  const has=(re)=>re.test(n);
  let intent='explore',label='Open exploration',reason='Your query leaves room to compare several angles.';
- if(has(/\\b(compare|versus| vs |difference|better than|pros and cons|alternatives)\\b/)){intent='compare';label='Compare perspectives';reason='The wording asks for a comparison, so look for evidence on each side.'}
- else if(has(/\\b(latest|today|current|recent|this week|202[4-9]|news|update|announced)\\b/)){intent='current';label='Current developments';reason='This looks time-sensitive; check publication dates and original announcements.'}
- else if(has(/\\b(why|how does|how do|explain|what is|what are|teach me|learn|meaning|basics|beginner)\\b/)){intent='learn';label='Build understanding';reason='Start with clear explanations, then check primary or specialist sources.'}
- else if(has(/\\b(research|paper|study|evidence|citation|literature|journal|systematic review)\\b/)){intent='research';label='Investigate evidence';reason='Prioritize research records, methods, dates, and cited original work.'}
- else if(has(/\\b(fix|solve|debug|error|how to|tutorial|steps|guide|repair)\\b/)){intent='solve';label='Find a practical route';reason='Look for reproducible steps, documentation, and more than one tested approach.'}
- else if(has(/\\b(near me|nearby|where is|directions|restaurants|hotel|places to visit|address)\\b/)){intent='place';label='Locate places';reason='Location details and opening information can change; verify them with the provider.'}
- else if(has(/\\b(price|buy|best .* (laptop|phone|camera|shoes|product)|review|cost|budget)\\b/)){intent='product';label='Evaluate options';reason='Compare specifications, total cost, date, and independent reviews.'}
- else if(has(/\\b(history|origin|evolution|future|forecast|trend|over time|what happens if)\\b/)){intent='patterns';label='Trace patterns and possibilities';reason='Separate documented historical patterns from uncertain forecasts.'}
+ if(has(/\b(compare|versus| vs |difference|better than|pros and cons|alternatives)\b/)){intent='compare';label='Compare perspectives';reason='The wording asks for a comparison, so look for evidence on each side.'}
+ else if(has(/\b(latest|today|current|recent|this week|202[4-9]|news|update|announced)\b/)){intent='current';label='Current developments';reason='This looks time-sensitive; check publication dates and original announcements.'}
+ else if(has(/\b(why|how does|how do|explain|what is|what are|teach me|learn|meaning|basics|beginner)\b/)){intent='learn';label='Build understanding';reason='Start with clear explanations, then check primary or specialist sources.'}
+ else if(has(/\b(research|paper|study|evidence|citation|literature|journal|systematic review)\b/)){intent='research';label='Investigate evidence';reason='Prioritize research records, methods, dates, and cited original work.'}
+ else if(has(/\b(fix|solve|debug|error|how to|tutorial|steps|guide|repair)\b/)){intent='solve';label='Find a practical route';reason='Look for reproducible steps, documentation, and more than one tested approach.'}
+ else if(has(/\b(near me|nearby|where is|directions|restaurants|hotel|places to visit|address)\b/)){intent='place';label='Locate places';reason='Location details and opening information can change; verify them with the provider.'}
+ else if(has(/\b(price|buy|best .* (laptop|phone|camera|shoes|product)|review|cost|budget)\b/)){intent='product';label='Evaluate options';reason='Compare specifications, total cost, date, and independent reviews.'}
+ else if(has(/\b(history|origin|evolution|future|forecast|trend|over time|what happens if)\b/)){intent='patterns';label='Trace patterns and possibilities';reason='Separate documented historical patterns from uncertain forecasts.'}
  return {intent,label,reason,query:q};
 }
 function makePathways(info){
