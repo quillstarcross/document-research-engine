@@ -17,6 +17,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Run CRELICS intelligence tests
+        run: node --test tests/crelics-intelligence.test.cjs
       - name: Validate embedded JavaScript syntax
         run: |
           node <<'NODE'
