@@ -78,13 +78,20 @@ test('temporal lens sorts newest first and caps output at five', () => {
 });
 
 test('cross-category connections suppress generic overlap and explain candidate links', () => {
-  context.results = [
+  const htmlSource = fs.readFileSync('index.html', 'utf8');
+  const start = htmlSource.indexOf('function deriveConnections(){');
+  const end = htmlSource.indexOf('\\n const guidance=', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const local = { results: [
     { title: 'Introduction to quantum sensors', url: 'https://example.org/a', key: 'a', category: 'web', source: 'Open web' },
     { title: 'Introduction to quantum sensors and medicine', url: 'https://example.org/b', key: 'b', category: 'research', source: 'Crossref' },
     { title: 'Quantum sensors for archaeology', url: 'https://example.org/c', key: 'c', category: 'news', source: 'GDELT' },
     { title: 'Introduction to systems and methods', url: 'https://example.org/d', key: 'd', category: 'books', source: 'Open Library' }
-  ];
-  const connections = context.deriveConnections();
+  ], norm: s => String(s || '').trim().toLowerCase() };
+  vm.createContext(local);
+  vm.runInContext(htmlSource.slice(start, end), local);
+  const connections = vm.runInContext('deriveConnections()', local);
   assert.ok(connections.length > 0);
   assert.ok(connections.every(x => x.a.category !== x.b.category));
   assert.ok(connections.every(x => x.shared.length >= 1));
@@ -95,7 +102,7 @@ test('cross-category connections suppress generic overlap and explain candidate 
 test('jsonFetch passes an abort signal and returns parsed JSON', async () => {
   const htmlSource = fs.readFileSync('index.html', 'utf8');
   const start = htmlSource.indexOf('async function jsonFetch(');
-  const end = htmlSource.indexOf('// CRELICS query intelligence:', start);
+  const end = htmlSource.indexOf('\\nasync \\n// CRELICS query intelligence:', start);
   assert.notEqual(start, -1);
   assert.notEqual(end, -1);
   let receivedSignal;
@@ -107,7 +114,7 @@ test('jsonFetch passes an abort signal and returns parsed JSON', async () => {
   vm.createContext(context);
   vm.runInContext(htmlSource.slice(start, end), context);
   assert.deepEqual(await context.jsonFetch('https://example.org/api', 100), { answer: 42 });
-  assert.ok(receivedSignal instanceof AbortSignal === false || receivedSignal);
+  assert.ok(receivedSignal, 'fetch receives an abort signal');
 });
 
 test('jsonFetch reports HTTP failures clearly', async () => {
