@@ -40,12 +40,15 @@ test('temporal lens ignores missing and invalid dates', () => {
   context.results = [
     { year: '2024-05-02', title: 'Dated paper', url: 'https://example.org/a', key: 'a', category: 'research' },
     { year: '', title: 'Undated record', url: 'https://example.org/b', key: 'b', category: 'web' },
-    { year: 'not-a-date', title: 'Invalid date', url: 'https://example.org/c', key: 'c', category: 'news' }
+    { year: 'not-a-date', title: 'Invalid date', url: 'https://example.org/c', key: 'c', category: 'news' },
+    { year: '2026garbage', title: 'Malformed year', url: 'https://example.org/d', key: 'd', category: 'news' },
+    { year: '20261022T120000', title: 'Dated news', url: 'https://example.org/e', key: 'e', category: 'news' }
   ];
   const timeline = context.deriveTemporalPatterns();
-  assert.equal(timeline.length, 1);
-  assert.equal(timeline[0].dateLabel, '2024-05-02');
-  assert.equal(timeline[0].title, 'Dated paper');
+  assert.equal(timeline.length, 2);
+  assert.equal(timeline[0].dateLabel, '2026-10-22');
+  assert.equal(timeline[0].title, 'Dated news');
+  assert.equal(timeline[1].dateLabel, '2024-05-02');
 });
 
 test('temporal lens sorts newest first and caps output at five', () => {
