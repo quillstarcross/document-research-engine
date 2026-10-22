@@ -44,6 +44,7 @@ function escapeHTML(value) {
 }
 function setSearchLinks(query) {
   const items = [
+    ['Google Books', 'https://books.google.com/books?q=' + encodeURIComponent(query)],
     ['Scribd', 'https://www.google.com/search?q=' + encodeURIComponent('site:scribd.com/document ' + query)],
     ['PDF search', 'https://www.google.com/search?q=' + encodeURIComponent(query + ' filetype:pdf')],
     ['Google Scholar', 'https://scholar.google.com/scholar?q=' + encodeURIComponent(query)]
@@ -75,17 +76,28 @@ async function search() {
         ].filter(Boolean).join(' · ')
       }))).catch(() => errors.push('Open Library')),
     fetch('https://www.googleapis.com/books/v1/volumes?q=' + encodeURIComponent(query) + '&maxResults=20')
-      .then(r => { if (!r.ok) throw Error('HTTP error'); return r.json(); })
-      .then(d => (d.items || []).forEach(x => {
-        const v = x.volumeInfo || {};
-        add({
-          title: v.title || 'Untitled',
-          url: v.infoLink || v.previewLink || 'https://books.google.com',
-          source: 'Google Books',
-          author: (v.authors || []).join(', '),
-          description: [v.publishedDate, v.publisher].filter(Boolean).join(' · ')
+      .then(async r => {
+        let d = {};
+        try { d = await r.json(); } catch {}
+        if (r.status === 429 || d.error?.code === 429) {
+          errors.push('Google Books API quota exceeded (HTTP 429)');
+          return;
+        }
+        if (!r.ok || d.error) {
+          errors.push('Google Books API returned an error');
+          return;
+        }
+        (d.items || []).forEach(x => {
+          const v = x.volumeInfo || {};
+          add({
+            title: v.title || 'Untitled',
+            url: v.infoLink || v.previewLink || 'https://books.google.com',
+            source: 'Google Books',
+            author: (v.authors || []).join(', '),
+            description: [v.publishedDate, v.publisher].filter(Boolean).join(' · ')
+          });
         });
-      })).catch(() => errors.push('Google Books')),
+      }).catch(() => errors.push('Google Books could not be reached')),
     fetch('https://archive.org/advancedsearch.php?q=' +
       encodeURIComponent('(' + query + ') AND mediatype:(texts)') +
       '&fl[]=identifier,title,creator,description,downloads&rows=25&output=json')
@@ -102,7 +114,7 @@ async function search() {
   try {
     await Promise.all(requests);
     $('status').textContent = 'Added ' + (data.length - before) + ' new results. ' +
-      (errors.length ? 'Could not reach: ' + errors.join(', ') + '. Check your connection or try again.' : 'Search complete.');
+      (errors.length ? 'Search finished with a source issue: ' + errors.join('; ') + '. Other available results are still shown.' : 'Search complete.');
     render();
   } finally {
     button.disabled = false;
