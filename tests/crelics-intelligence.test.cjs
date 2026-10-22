@@ -13,6 +13,26 @@ const context = { results: [], history: [], activeQuery: '', norm: s => String(s
 vm.createContext(context);
 vm.runInContext(intelligenceSource, context);
 
+test('query-aware ranking rewards exact phrases, title matches, and term coverage', () => {
+  const htmlSource = fs.readFileSync('index.html', 'utf8');
+  const start = htmlSource.indexOf('function searchTerms(');
+  const end = htmlSource.indexOf('function metadataAudit(', start);
+  assert.notEqual(start, -1, 'search ranking helpers exist');
+  assert.notEqual(end, -1, 'ranking helper section has a clear end');
+  const local = {
+    activeQuery: 'quantum sensors medicine',
+    prefs: { personalization: false, interests: [] },
+    norm: s => String(s || '').trim().toLowerCase(),
+    Set, String, Array, Math
+  };
+  vm.createContext(local);
+  vm.runInContext(htmlSource.slice(start, end), local);
+  const score = title => local.relevanceScore({ title, description: '', author: '' });
+  assert.ok(score('Quantum Sensors for Medicine') > score('Quantum methods for physics'));
+  assert.ok(score('A guide to quantum sensors in medicine') > score('Quantum sensors'));
+  assert.equal(local.relevanceScore({ title: 'Unrelated subject', description: '', author: '' }), 0);
+});
+
 test('safeURL rejects executable and non-web URL schemes', () => {
   const htmlSource = fs.readFileSync('index.html', 'utf8');
   const safeStart = htmlSource.indexOf('function safeURL(');
