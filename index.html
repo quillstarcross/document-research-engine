@@ -148,7 +148,7 @@ function deriveTemporalPatterns(){
   const raw=String(r.year||'').trim();
   if(!raw)return null;
   let d=null,meaning='Date supplied by provider';
-  const compact=raw.match(/^(\\d{4})(\\d{2})(\\d{2})T/);
+  const compact=raw.match(/^(\d{4})(\d{2})(\d{2})T/);
   if(compact){d=new Date(Date.UTC(+compact[1],+compact[2]-1,+compact[3]));meaning='Date seen/indexed by news provider';}
   else{
    const year=raw.match(/^(\d{4})(?:$|[-/](\d{1,2})(?:[-/](\d{1,2}))?)$/);
