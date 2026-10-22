@@ -33,6 +33,33 @@ test('query-aware ranking rewards exact phrases, title matches, and term coverag
   assert.equal(local.relevanceScore({ title: 'Unrelated subject', description: '', author: '' }), 0);
 });
 
+test('relevance explanations disclose title, description, and personalization match signals', () => {
+  const htmlSource = fs.readFileSync('index.html', 'utf8');
+  const start = htmlSource.indexOf('const SEARCH_STOP_WORDS=');
+  const end = htmlSource.indexOf('function metadataAudit(', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const local = {
+    activeQuery: 'quantum sensors medicine',
+    prefs: { personalization: true, interests: ['quantum'] },
+    norm: s => String(s || '').trim().toLowerCase(),
+    Set, String, Array, Math
+  };
+  vm.createContext(local);
+  vm.runInContext(htmlSource.slice(start, end), local);
+  const reasons = Array.from(local.relevanceReasons({
+    title: 'Quantum sensors for medicine',
+    description: 'A practical guide to quantum sensors.',
+    author: 'Medicine Research Group'
+  }));
+  assert.ok(reasons.some(x => x.includes('matched in title')));
+  assert.ok(reasons.some(x => x.includes('matched in description')));
+  assert.ok(reasons.some(x => x.includes('author or publisher')));
+  assert.ok(reasons.some(x => x.includes('selected interest')));
+  local.activeQuery = 'zzzxqv';
+  assert.ok(Array.from(local.relevanceReasons({ title: 'A completely unrelated title', description: '', author: '' }))[0].includes('No strong text overlap'));
+});
+
 test('tokenizer handles punctuation and Unicode while ranking ignores common stop words', () => {
   const htmlSource = fs.readFileSync('index.html', 'utf8');
   const start = htmlSource.indexOf('const SEARCH_STOP_WORDS=');
