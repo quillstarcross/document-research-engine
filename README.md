@@ -13,6 +13,11 @@ CRELICS is a mobile-first search and discovery prototype intended to help people
 - Specialist book and research metadata from Open Library, Google Books, and Crossref.
 - YouTube search hand-off. Direct YouTube Data API results are not enabled because YouTube requires a configured API credential.
 - Source deduplication, relevance sorting, source filtering, local saved sources, and local search history.
+- Intent-aware source routing with visible explanations for why a provider set was selected.
+- Investigation pathways tailored to compare, current-events, learning, research, problem-solving, place, product, trend, and open-exploration queries.
+- An evidence lens that reports metadata completeness without pretending it measures truth or credibility.
+- Cross-category title-term bridges, clearly framed as leads rather than proof of meaningful connections.
+- A dated-record lens that shows up to five dated results and distinguishes provider publication dates from dates seen/indexed; it does not generate forecasts.
 - Local preferences for goals, interests, theme, layout density, and explanation depth.
 - Controls to clear history and saved sources or reset the local profile.
 
@@ -41,7 +46,7 @@ Open `index.html` in a modern browser or publish the repository with GitHub Page
 ## Roadmap
 
 1. Test provider response schemas, browser CORS, rate limits, error states, and mobile accessibility.
-2. Add automated unit and browser tests for search, category filtering, saving, personalization, and data clearing.
+2. Add automated unit and browser tests for intent classification, adaptive provider routing, temporal metadata handling, search, category filtering, saving, personalization, and data clearing.
 3. Build a small backend/provider gateway for protected credentials, caching, rate limiting, and consistent error handling.
 4. Add properly credentialed video, product, and place search integrations.
 5. Improve ranking, deduplication, source-quality signals, freshness, and user-controlled discovery trails.
